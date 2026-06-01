@@ -62,7 +62,7 @@ const HelpFullCardSection = () => {
           </p>
 
           {/* Small Text */}
-          <span
+          {/* <span
             className="
               text-[#AFC6FF80]
               text-[14px]
@@ -71,7 +71,7 @@ const HelpFullCardSection = () => {
             "
           >
             Setup in &lt;2 minutes.
-          </span>
+          </span> */}
 
         </Reveal>
       </div>

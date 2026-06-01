@@ -4,7 +4,6 @@ import { StaggerContainer, StaggerItem } from "../motion/Stagger";
 
 const FeatureGridSection = ({sectionData}: any) => {
   const data = sectionData;
-  console.log('Called..', sectionData)
   return (
     <section className="w-full overflow-hidden bg-[#F8FAFC]">
       <div className="mx-auto w-full max-w-[1280px] px-4 py-16 sm:px-6 md:px-8 md:py-20 lg:px-10 lg:py-24 xl:px-12">

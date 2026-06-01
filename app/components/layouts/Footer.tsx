@@ -130,7 +130,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-[#64748B] text-[14px] leading-5 font-normal text-center sm:text-left">
-            © 2024 Staffton Medical Recruitment. All rights reserved.
+            © 2026 Staffton Medical Recruitment. All rights reserved.
           </p>
 
           {/* Social Icons */}

@@ -3,11 +3,21 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "For Hospitals", href: "/for-hospitals" },
+    { name: "For Professionals", href: "/for-professionals" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,27 +74,39 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <nav className="hidden md:flex items-center gap-8">
-              <Link
-                href="/"
-                className="text-[14px] font-semibold text-[#344054] hover:text-[#0F9D94] transition"
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/for-hospitals"
-                className="text-[14px] font-semibold text-[#344054] hover:text-[#0F9D94] transition"
-              >
-                For Hospitals
-              </Link>
-
-              <Link
-                href="/for-professionals"
-                className="text-[14px] font-semibold text-[#344054] hover:text-[#0F9D94] transition"
-              >
-                For Professionals
-              </Link>
+            <nav className="hidden md:flex items-center gap-2 relative">
+              {navLinks.map((link, idx) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onMouseEnter={() => setHoveredIndex(idx)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className={`relative px-4 py-2 text-[14px] font-semibold transition-colors duration-200 rounded-lg ${
+                      isActive ? "text-[#0F9D94]" : "text-[#344054] hover:text-[#0F9D94]"
+                    }`}
+                  >
+                    {/* Hover highlight background */}
+                    {hoveredIndex === idx && (
+                      <motion.span
+                        layoutId="desktopHoverHighlight"
+                        className="absolute inset-0 bg-[#0F9D94]/5 rounded-lg -z-10"
+                        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                      />
+                    )}
+                    {/* Active line indicator */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="desktopActiveUnderline"
+                        className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#0F9D94] rounded-full"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{link.name}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Desktop Buttons */}
@@ -172,31 +194,40 @@ const Navbar = () => {
             </div>
 
             {/* Menu Items */}
-            <nav className="flex flex-col gap-5 border-t border-white/20 pt-6">
-
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="text-white text-[17px] font-medium"
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/for-hospitals"
-                onClick={closeMenu}
-                className="text-white text-[17px] font-medium"
-              >
-                For Hospitals
-              </Link>
-
-              <Link
-                href="/for-professionals"
-                onClick={closeMenu}
-                className="text-white text-[17px] font-medium"
-              >
-                For Professionals
-              </Link>
+            <nav className="flex flex-col gap-2 border-t border-white/20 pt-6 relative">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className={`relative text-[17px] px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between ${
+                      isActive
+                        ? "text-[#0F9D94] font-semibold"
+                        : "text-white font-medium hover:bg-white/10"
+                    }`}
+                  >
+                    {/* Active background pill */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="mobileActiveTab"
+                        className="absolute inset-0 bg-white rounded-xl shadow-md -z-10"
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                      />
+                    )}
+                    <span className="relative z-10">{link.name}</span>
+                    {isActive && (
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
+                        className="relative z-10 w-2 h-2 rounded-full bg-[#0F9D94]"
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Buttons */}
