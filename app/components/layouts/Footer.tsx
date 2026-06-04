@@ -91,14 +91,14 @@ const Footer = () => {
             </h3>
 
             <div className="flex flex-col gap-3">
-              {/* <a
+              <a
                 href="https://mail.google.com/mail/?view=cm&fs=1&to=rahulr@stafftonhealth.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#64748B] text-[14px] leading-5 hover:text-[#0F172A] transition-colors"
               >
                 Contact
-              </a> */}
+              </a>
 
               {/* <Link
                 href="/support"
@@ -129,32 +129,32 @@ const Footer = () => {
         >
 
           {/* Copyright */}
-          {/* <p className="text-[#64748B] text-[14px] leading-5 font-normal text-center sm:text-left">
+          <p className="text-[#64748B] text-[14px] leading-5 font-normal text-center sm:text-left">
             © 2026 Staffton Medical Recruitment. All rights reserved.
-          </p> */}
+          </p>
 
           {/* Social Icons */}
           <div className="flex items-center gap-6">
 
             {/* Twitter SVG */}
-            {/* <a href="#" className="group">
+            <a href="#" className="group">
               <svg
                 className="w-6 h-6 fill-[#94A3B8] group-hover:fill-[#0F172A] transition-all duration-300"
                 viewBox="0 0 24 24"
               >
                 <path d="M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.4-1.2 1.7-2.1-.8.5-1.7.8-2.6 1-1.5-1.6-4.1-1.7-5.8-.2-1.1 1-1.5 2.5-1.1 3.9-3.3-.2-6.3-1.8-8.3-4.4-1.1 1.9-.5 4.3 1.3 5.5-.6 0-1.2-.2-1.7-.5 0 2 1.4 3.8 3.4 4.2-.6.2-1.2.2-1.8.1.5 1.7 2.1 2.9 3.9 2.9-1.5 1.2-3.4 1.8-5.3 1.8H2c1.9 1.2 4.2 1.9 6.6 1.9 7.9 0 12.3-6.6 12.3-12.3v-.6c.8-.5 1.5-1.2 2.1-2z" />
               </svg>
-            </a> */}
+            </a>
 
             {/* LinkedIn SVG */}
-            {/* <a href="#" className="group">
+            <a href="#" className="group">
               <svg
                 className="w-6 h-6 fill-[#94A3B8] group-hover:fill-[#0F172A] transition-all duration-300"
                 viewBox="0 0 24 24"
               >
                 <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.48 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.1c.5-.9 1.8-2.2 3.8-2.2 4.1 0 4.9 2.7 4.9 6.3V24h-4v-7.4c0-1.8 0-4.1-2.5-4.1s-2.9 1.9-2.9 4V24h-4V8z" />
               </svg>
-            </a> */}
+            </a>
 
           </div>
         </div>
