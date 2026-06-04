@@ -38,14 +38,14 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3">
               <Link
-                href="/for-hospitals"
+                href="/for-hospitals/"
                 className="text-[#64748B] text-[14px] leading-5 hover:text-[#0F172A] transition-colors"
               >
                 Hospitals
               </Link>
 
               <Link
-                href="/for-professionals"
+                href="/for-professionals/"
                 className="text-[#64748B] text-[14px] leading-5 hover:text-[#0F172A] transition-colors"
               >
                 Professionals
@@ -92,7 +92,7 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3">
               <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=support@stafftonhealth.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=rahulr@stafftonhealth.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#64748B] text-[14px] leading-5 hover:text-[#0F172A] transition-colors"

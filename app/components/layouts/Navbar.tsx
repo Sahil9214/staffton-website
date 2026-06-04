@@ -70,13 +70,14 @@ const Navbar = () => {
                 width={160}
                 height={40}
                 className="h-10 w-auto object-contain"
-              />
+              />VerifiedIcon
             </Link>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-2 relative">
               {navLinks.map((link, idx) => {
-                const isActive = pathname === link.href;
+                const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
+                const isActive = normalizePath(pathname) === normalizePath(link.href);
                 return (
                   <Link
                     key={link.href}
@@ -115,7 +116,7 @@ const Navbar = () => {
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
-      "https://d3gifdjcbs2hsb.cloudfront.net"
+      "https://app.stafftonhealth.com/"
     }
     className="inline-flex h-9 items-center justify-center px-4 text-[14px] font-semibold text-[#344054] hover:text-[#0F9D94] transition-all duration-200"
   >
@@ -126,7 +127,7 @@ const Navbar = () => {
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
-      "https://d3gifdjcbs2hsb.cloudfront.net"
+      "https://app.stafftonhealth.com/"
     }
     className="inline-flex h-10 items-center justify-center px-6 rounded-[8px] bg-[#0F9D94] text-white text-[14px] font-semibold hover:bg-[#0c857d] transition-all duration-200"
   >
@@ -196,7 +197,8 @@ const Navbar = () => {
             {/* Menu Items */}
             <nav className="flex flex-col gap-2 border-t border-white/20 pt-6 relative">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
+                const isActive = normalizePath(pathname) === normalizePath(link.href);
                 return (
                   <Link
                     key={link.href}
@@ -237,7 +239,7 @@ const Navbar = () => {
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
-      "https://d3gifdjcbs2hsb.cloudfront.net"
+      "https://app.stafftonhealth.com/"
     }
     onClick={closeMenu}
     className="flex w-full h-[50px] items-center justify-center rounded-xl border border-white text-white text-[16px] font-semibold hover:bg-white hover:text-[#0F9D94] transition-all duration-300"
@@ -246,11 +248,11 @@ const Navbar = () => {
   </a>
 
   {/* Sign Up Button */}
-  <a 
+  <a
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
-      "https://d3gifdjcbs2hsb.cloudfront.net"
+      "https://app.stafftonhealth.com/"
     }
     onClick={closeMenu}
     className="flex w-full h-[50px] items-center justify-center rounded-xl bg-white text-[#0F9D94] text-[16px] font-semibold hover:bg-[#f5f5f5] transition-all duration-300"

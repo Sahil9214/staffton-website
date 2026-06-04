@@ -32,13 +32,13 @@ const StatsSection = () => {
             </h2>
           </Reveal>
 
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-8 sm:gap-y-8 md:gap-y-0">
+          <StaggerContainer className=" font-inter grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-8 sm:gap-y-8 md:gap-y-0">
             {statsData.map((item, index) => (
               <StaggerItem
                 key={index}
                 className="flex flex-col items-center justify-center gap-2 text-center min-w-0 px-1 sm:px-0"
               >
-                <h3 className="text-[#0D9488] font-extrabold text-[30px] sm:text-[34px] lg:text-[36px] leading-[40px]">
+                <h3 className="text-[#0D9488]  font-extrabold text-[30px] sm:text-[34px] lg:text-[36px] leading-[40px]">
                   {item.value}
                 </h3>
 

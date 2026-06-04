@@ -57,7 +57,7 @@ const HeroSection = () => {
             ))}
           </StaggerContainer>
 
-          <Reveal immediate delay={0.2} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Reveal immediate delay={0.2} className="flex flex-col items-center justify-center gap-4 sm:flex-row mt-[48px]">
             <div className="flex items-center leading-none">
               <Image
                 src="/images/for_hospitals_members_image.svg"
@@ -75,7 +75,7 @@ const HeroSection = () => {
           </Reveal>
         </Reveal>
 
-        <Reveal immediate delay={0.25} className="mt-[18px] w-full max-w-[1228px] px-4 leading-[0] sm:px-6 lg:px-8 xl:px-0">
+        <Reveal immediate delay={0.25} className=" w-full max-w-[1228px] px-4 leading-[0] sm:px-6 lg:px-8 xl:px-0">
           <img
             src="/images/for_hospitals_hero_image.svg"
             alt="Dashboard Preview"

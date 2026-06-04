@@ -7,7 +7,7 @@ import TrustSecuritySection from './components/TrustSecuritySection'
 import HelpFullCardSection from './components/HelpFullCardSection'
 import FAQSection from '../components/sections/FAQSection'
 import { forProfessionalsFeatureGridSection } from '../utility/data'
-
+    
 const page = () => {
   return (
     <>

@@ -15,7 +15,7 @@ export const homeFaqs = {
         },
         {
             question: 'Can Staffton integrate with existing Hospital systems?',
-            ans: 'Yes, Staffton can support integration with existing hospital HR, ATS, or workforce management systems, helping teams manage hiring data smoothly without duplicate manual work.'
+            ans: 'Yes, Staffton can support integration with existing hospital HR or workforce management systems, helping teams manage hiring data smoothly without duplicate manual work.'
         },
     ]
 };

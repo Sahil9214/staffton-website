@@ -12,11 +12,11 @@ const TheNewStandardSection = () => {
             </span>
 
             <div className="flex flex-col gap-1">
-              <h2 className="text-[32px] font-bold leading-[38px] tracking-[-3.6px] text-[#191C1E] sm:text-[44px] sm:leading-[48px] lg:text-[48px] lg:leading-[52px]">
+              <h2 className="text-[32px] font-bold leading-[38px] tracking-[-1.5px] text-[#191C1E] sm:text-[44px] sm:leading-[48px] lg:text-[48px] lg:leading-[52px]">
                 Precision Talent.
               </h2>
 
-              <h2 className="text-[32px] font-bold leading-[38px] tracking-[-3.6px] text-[#0D9488] sm:text-[44px] sm:leading-[48px] lg:text-[48px] lg:leading-[52px]">
+              <h2 className="text-[32px] font-bold leading-[38px] tracking-[-1.5px] text-[#0D9488] sm:text-[44px] sm:leading-[48px] lg:text-[48px] lg:leading-[52px]">
                 Total Control.
               </h2>
             </div>
