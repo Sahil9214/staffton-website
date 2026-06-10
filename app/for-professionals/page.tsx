@@ -6,7 +6,7 @@ import PowerfulPlatformSection from './components/PowerfulPlatformSection'
 import TrustSecuritySection from './components/TrustSecuritySection'
 import HelpFullCardSection from './components/HelpFullCardSection'
 import FAQSection from '../components/sections/FAQSection'
-import { forProfessionalsFeatureGridSection } from '../utility/data'
+import { professionalFeaturesGrid } from '../utility/constants'
     
 const page = () => {
   return (
@@ -15,7 +15,7 @@ const page = () => {
 
     <StatsSection />
 
-    <FeatureGridSection sectionData={forProfessionalsFeatureGridSection} />
+    <FeatureGridSection sectionData={professionalFeaturesGrid} />
 
     <PowerfulPlatformSection />
 

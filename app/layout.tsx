@@ -4,6 +4,7 @@ import "./globals.css";
 import { plusJakartaSans, inter, manrope } from './fonts'
 import Navbar from "./components/layouts/Navbar";
 import Footer from "./components/layouts/Footer";
+import CookieConsent from "./components/layouts/CookieConsent";
 
 
 export const metadata: Metadata = {
@@ -33,6 +34,8 @@ export default function RootLayout({
         {children}
 
         <Footer />
+        
+        <CookieConsent />
         
         </body>
     </html>

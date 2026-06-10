@@ -1,27 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const securityFeatures = [
-  {
-    title: "Security Compliant",
-    description:
-      "Enterprise-grade encryption for all candidate documents and private health organization data.",
-    icon: "/security_icon.svg",
-  },
-  {
-    title: "Vetted Professionals",
-    description:
-      "Our team manually verifies licenses and credentials against state databases regularly.",
-    icon: "/right_check_icon.svg",
-  },
-  {
-    title: "Privacy Focused",
-    description:
-      "No public resumes. Your data is only shared with hospitals you choose to apply to.",
-    icon: "/privacy_lock_icon.svg",
-  },
-];
+import { trustSecurityFeatures } from "../../utility/constants";
 
 const TrustSecuritySection = () => {
   return (
@@ -60,9 +41,11 @@ const TrustSecuritySection = () => {
                 rounded-[24px]
               "
             >
-              <img
+              <Image
                 src="/images/clinical_trust_image.svg"
                 alt="Clinical Trust"
+                width={584}
+                height={500}
                 className="
                   w-full
                   h-auto
@@ -101,7 +84,7 @@ const TrustSecuritySection = () => {
 
             {/* Features List */}
             <StaggerContainer className="flex flex-col gap-8">
-              {securityFeatures.map((item, index) => (
+              {trustSecurityFeatures.map((item, index) => (
                 <StaggerItem
                   key={index}
                   className="
@@ -123,9 +106,11 @@ const TrustSecuritySection = () => {
                       justify-center
                     "
                   >
-                    <img
+                    <Image
                       src={item.icon}
                       alt={item.title}
+                      width={16}
+                      height={20}
                       className="
                         w-4
                         h-5

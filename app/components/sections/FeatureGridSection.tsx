@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../motion/Stagger";
 
@@ -29,9 +30,11 @@ const FeatureGridSection = ({sectionData}: any) => {
                 className="flex min-h-[220px] flex-col rounded-[24px] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_10px_30px_rgba(0,0,0,0.06)] sm:min-h-[254px] sm:p-8"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-[#E8EEF7]">
-                  <img
+                  <Image
                     src={feature.icon}
                     alt={feature.title}
+                    width={24}
+                    height={24}
                     className="h-6 w-6 object-contain"
                   />
                 </div>

@@ -6,7 +6,7 @@ import EliteControlPhilosophySection from "./components/EliteControlPhilosophySe
 import FeatureGridSection from "../components/sections/FeatureGridSection";
 import PowerfulPlatformSection from "./components/PowerfulPlatformSection";
 import FAQSection from "../components/sections/FAQSection";
-import { forHospitalsFeatureGridSection } from "../utility/data";
+import { hospitalFeaturesGrid } from "../utility/constants";
 
 export default function ForHospitalsPage() {
   return (
@@ -16,7 +16,7 @@ export default function ForHospitalsPage() {
       <TheNewStandardSection />
       <MedicalSovereigntySection />
       <EliteControlPhilosophySection />
-      <FeatureGridSection sectionData={forHospitalsFeatureGridSection} />
+      <FeatureGridSection sectionData={hospitalFeaturesGrid} />
       <PowerfulPlatformSection />
       <FAQSection />
     </main>

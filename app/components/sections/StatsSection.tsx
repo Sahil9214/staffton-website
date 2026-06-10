@@ -1,25 +1,7 @@
 import React from "react";
 import Reveal from "../motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../motion/Stagger";
-
-const statsData = [
-  {
-    value: "15k+",
-    label: "Verified Professionals",
-  },
-  {
-    value: "48h",
-    label: "Avg. Time to Hire",
-  },
-  {
-    value: "98%",
-    label: "Placement Success",
-  },
-  {
-    value: "1.2M",
-    label: "Shifts Filled",
-  },
-];
+import { platformStats } from "../../utility/constants";
 
 const StatsSection = () => {
   return (
@@ -33,7 +15,7 @@ const StatsSection = () => {
           </Reveal>
 
           <StaggerContainer className=" font-inter grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-8 sm:gap-y-8 md:gap-y-0">
-            {statsData.map((item, index) => (
+            {platformStats.map((item, index) => (
               <StaggerItem
                 key={index}
                 className="flex flex-col items-center justify-center gap-2 text-center min-w-0 px-1 sm:px-0"

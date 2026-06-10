@@ -4,29 +4,7 @@ import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import Reveal from "../motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../motion/Stagger";
-
-const faqData = [
-  {
-    question: "What Staffton healthcare hiring platform does?",
-    answer:
-      "Staffton helps hospitals and healthcare organizations hire qualified medical professionals faster, including doctors, nurses, specialists, technicians, and support staff, through a streamlined hiring platform.",
-  },
-  {
-    question: "How does Staffton improve the hiring process?",
-    answer:
-      "Staffton improves hiring by helping employers quickly find, screen, and shortlist the right medical professionals based on role, experience, skills, certifications, and availability.",
-  },
-  {
-    question: "What features does Staffton offer for employers?",
-    answer:
-      "Staffton offers job posting, candidate matching, resume screening, applicant tracking, interview scheduling, credential verification support, and hiring insights for healthcare employers.",
-  },
-  {
-    question: "Can Staffton integrate with existing Hospital systems?",
-    answer:
-      "Yes, Staffton can support integration with existing hospital HR or workforce management systems, helping teams manage hiring data smoothly without duplicate manual work.",
-  },
-];
+import { faqList } from "../../utility/constants";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex]: any = useState(0);
@@ -50,7 +28,7 @@ const FAQSection = () => {
           </Reveal>
 
           <StaggerContainer className="w-full min-w-0">
-            {faqData.map((item, index) => {
+            {faqList.map((item, index) => {
               const isOpen = activeIndex === index;
 
               return (

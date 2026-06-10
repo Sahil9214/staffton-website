@@ -1,62 +1,7 @@
 import React from "react";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const hospitalSteps = [
-  {
-    title: "Register Organization",
-    description:
-      "Setup your hospital profile and verify your facility in minutes.",
-  },
-  {
-    title: "Post Precise Roles",
-    description:
-      "Define requirements, shift patterns, and benefits with our smart editor.",
-  },
-  {
-    title: "Review & Shortlist",
-    description:
-      "Browse through ranked candidates with pre-verified credentials.",
-  },
-  {
-    title: "Instant Direct Chat",
-    description:
-      "Interview candidates through our secure in-platform messenger.",
-  },
-  {
-    title: "Secure Hire",
-    description:
-      "Finalize contracts and start onboarding instantly.",
-  },
-];
-
-const professionalSteps = [
-  {
-    title: "Create Elite Profile",
-    description:
-      "Build your medical resume and upload certifications for verification.",
-  },
-  {
-    title: "Browse Top Jobs",
-    description:
-      "Filter by specialty, pay, and facility type to find your match.",
-  },
-  {
-    title: "Apply with One Click",
-    description:
-      "Send your verified credentials instantly to hiring managers.",
-  },
-  {
-    title: "Chat with Hospitals",
-    description:
-      "Connect directly with the team you'll be working with.",
-  },
-  {
-    title: "Track Application",
-    description:
-      "Get real-time status updates on every step of your hiring journey.",
-  },
-];
+import { hospitalOnboardingSteps, professionalOnboardingSteps } from "../../utility/constants";
 
 const StepCard = ({
   badge,
@@ -131,7 +76,7 @@ const HowItWorksSection = () => {
                 badgeBg="#D9E2FF"
                 badgeText="#001944"
                 circleBg="#0D9488"
-                steps={hospitalSteps}
+                steps={hospitalOnboardingSteps}
                 borderRight={true}
               />
             </Reveal>
@@ -142,7 +87,7 @@ const HowItWorksSection = () => {
                 badgeBg="#89F5E7"
                 badgeText="#00201D"
                 circleBg="#006A61"
-                steps={professionalSteps}
+                steps={professionalOnboardingSteps}
               />
             </Reveal>
           </div>

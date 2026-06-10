@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stafftonhealth.com/sitemap.xml

@@ -6,18 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { navigationLinks } from "../../utility/constants";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "For Hospitals", href: "/for-hospitals" },
-    { name: "For Professionals", href: "/for-professionals" },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,7 +70,7 @@ const Navbar = () => {
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-2 relative">
-              {navLinks.map((link, idx) => {
+              {navigationLinks.map((link, idx) => {
                 const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
                 const isActive = normalizePath(pathname) === normalizePath(link.href);
                 return (
@@ -112,7 +107,7 @@ const Navbar = () => {
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center gap-4">
-  <a
+  <Link
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
@@ -121,9 +116,9 @@ const Navbar = () => {
     className="inline-flex h-9 items-center justify-center px-4 text-[14px] font-semibold text-[#344054] hover:text-[#0F9D94] transition-all duration-200"
   >
     Login
-  </a>
+  </Link>
 
-  <a
+  <Link
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
@@ -132,7 +127,7 @@ const Navbar = () => {
     className="inline-flex h-10 items-center justify-center px-6 rounded-[8px] bg-[#0F9D94] text-white text-[14px] font-semibold hover:bg-[#0c857d] transition-all duration-200"
   >
     Sign Up
-  </a>
+  </Link>
 </div>
 
             {/* Mobile Hamburger */}
@@ -196,7 +191,7 @@ const Navbar = () => {
 
             {/* Menu Items */}
             <nav className="flex flex-col gap-2 border-t border-white/20 pt-6 relative">
-              {navLinks.map((link) => {
+              {navigationLinks.map((link) => {
                 const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
                 const isActive = normalizePath(pathname) === normalizePath(link.href);
                 return (
@@ -235,7 +230,7 @@ const Navbar = () => {
             {/* Buttons */}
             <div className="mt-10 flex flex-col gap-4">
   {/* Login Button */}
-  <a
+  <Link
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
@@ -245,10 +240,10 @@ const Navbar = () => {
     className="flex w-full h-[50px] items-center justify-center rounded-xl border border-white text-white text-[16px] font-semibold hover:bg-white hover:text-[#0F9D94] transition-all duration-300"
   >
     Login
-  </a>
+  </Link>
 
   {/* Sign Up Button */}
-  <a
+  <Link
     target="_blank"
     href={
       process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
@@ -258,7 +253,7 @@ const Navbar = () => {
     className="flex w-full h-[50px] items-center justify-center rounded-xl bg-white text-[#0F9D94] text-[16px] font-semibold hover:bg-[#f5f5f5] transition-all duration-300"
   >
     Sign Up
-  </a>
+  </Link>
 </div>
           </div>
         </div>

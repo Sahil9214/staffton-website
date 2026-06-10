@@ -3,12 +3,7 @@ import { BadgeCheck, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const features = [
-  "Automated Credential Verification",
-  "Real-time Messaging",
-  "Direct hospital-to-candidate messaging",
-];
+import { hospitalHeroFeatures } from "../../utility/constants";
 
 const HeroSection = () => {
   return (
@@ -46,7 +41,7 @@ const HeroSection = () => {
           </div>
 
           <StaggerContainer className="flex w-full flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-6 lg:gap-x-[42px]">
-            {features.map((item, index) => (
+            {hospitalHeroFeatures.map((item, index) => (
               <StaggerItem key={index} className="flex max-w-full items-start gap-3 sm:items-center">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#0D9488] sm:mt-0" />
 
@@ -76,9 +71,12 @@ const HeroSection = () => {
         </Reveal>
 
         <Reveal immediate delay={0.25} className=" w-full max-w-[1228px] px-4 leading-[0] sm:px-6 lg:px-8 xl:px-0">
-          <img
+          <Image
             src="/images/for_hospitals_hero_image.svg"
             alt="Dashboard Preview"
+            width={1228}
+            height={700}
+            priority
             className="block h-auto w-full max-w-full -mb-[24px]"
           />
         </Reveal>

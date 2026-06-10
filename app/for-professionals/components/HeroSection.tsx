@@ -1,15 +1,9 @@
 import React from "react";
+import Image from "next/image";
 import { BadgeCheck, CheckCircle2 } from "lucide-react";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const features = [
-  "Automated Credential Verification",
-  "Candidate pipelines for easy pool management.",
-  "One step communication solution with in app chat.",
-  "Real-time Matchmaking.",
-  "Direct hospital-to-clinician messaging",
-];
+import { professionalHeroFeatures } from "../../utility/constants";
 
 const HeroSection = () => {
   return (
@@ -38,7 +32,7 @@ const HeroSection = () => {
             </p>
 
             <StaggerContainer className="flex flex-col gap-3 pt-1 sm:pt-2">
-              {features.map((item, index) => (
+              {professionalHeroFeatures.map((item, index) => (
                 <StaggerItem key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 min-w-[20px] shrink-0 text-[#00BBA7] mt-[2px]" />
 
@@ -52,9 +46,12 @@ const HeroSection = () => {
 
           <Reveal immediate delay={0.15} className="w-full min-w-0 flex justify-center lg:justify-end">
             <div className="w-full max-w-[584px]">
-              <img
+              <Image
                 src="/images/for_professionals_hero_image.svg"
                 alt="Medical Professionals"
+                width={584}
+                height={500}
+                priority
                 className="w-full h-auto max-w-full object-cover rounded-[24px]"
               />
             </div>

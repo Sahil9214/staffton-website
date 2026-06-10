@@ -1,27 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const platformFeatures = [
-  {
-    title: "Talent Pipeline",
-    description:
-      "Visualize your recruitment funnel from applicant to hired staff.",
-    icon: "/users_icon.svg",
-  },
-  {
-    title: "Secure Messaging",
-    description:
-      "Encrypted chat for discussing clinical roles and contracts.",
-    icon: "/chat_green_icon.svg",
-  },
-  {
-    title: "Smart Contracts",
-    description:
-      "Digital signature and automated compliance checking.",
-    icon: "/doc_icon.svg",
-  },
-];
+import { platformFeatures } from "../../utility/constants";
 
 const PowerfulPlatformSection = () => {
   return (
@@ -42,9 +23,11 @@ const PowerfulPlatformSection = () => {
           <div className="mt-10 grid grid-cols-1 items-center gap-8 sm:mt-12 lg:mt-14 lg:grid-cols-12">
             <Reveal delay={0.1} className="min-w-0 lg:col-span-8">
               <div className="w-full overflow-hidden rounded-[24px] bg-[#111827] shadow-[0px_20px_80px_rgba(0,0,0,0.45)]">
-                <img
+                <Image
                   src="/images/for_Professionals_powerful_platform_image.svg"
                   alt="Platform Dashboard"
+                  width={750}
+                  height={500}
                   className="block h-auto w-full max-w-full object-cover opacity-90"
                 />
               </div>
@@ -57,9 +40,11 @@ const PowerfulPlatformSection = () => {
                   className="flex w-full flex-col gap-3 rounded-[24px] border border-[#33415580] bg-[#1E293B80] p-5 backdrop-blur-sm sm:p-6"
                 >
                   <div className="flex items-center gap-3">
-                    <img
+                    <Image
                       src={feature.icon}
                       alt={feature.title}
+                      width={22}
+                      height={16}
                       className="h-4 w-[22px] shrink-0 object-contain"
                     />
 

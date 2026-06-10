@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 
 const TheNewStandardSection = () => {
@@ -28,9 +29,11 @@ const TheNewStandardSection = () => {
             </p>
 
             <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center sm:gap-6 sm:pt-4">
-              <img
+              <Image
                 src="/images/for_hospitals_members_image.svg"
                 alt="Trusted Hospitals"
+                width={120}
+                height={48}
                 className="h-[48px] w-[120px] shrink-0 object-contain"
               />
 
@@ -46,9 +49,11 @@ const TheNewStandardSection = () => {
 
           <Reveal delay={0.1} className="flex w-full min-w-0 justify-center lg:justify-end">
             <div className="w-full max-w-[576px] overflow-hidden">
-              <img
+              <Image
                 src="/images/the_new_standard_image.svg"
                 alt="Precision Dashboard"
+                width={576}
+                height={500}
                 className="block h-auto w-full max-w-full object-cover"
               />
             </div>

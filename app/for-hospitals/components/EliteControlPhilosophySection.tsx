@@ -1,27 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const philosophyData = [
-  {
-    number: "01",
-    title: "Curated Onboarding",
-    description:
-      "We don't just accept resumes. Every professional undergoes a multi-stage clinical assessment and peer-review process before joining our instrad of Aeline Network.",
-  },
-  {
-    number: "02",
-    title: "Algorithmic Matching",
-    description:
-      "Our proprietary AI matches professionals based on clinical competency, procedural experience, and facility culture fit, ensuring a 98.4% retention rate.",
-  },
-  {
-    number: "03",
-    title: "Continuous Quality Management",
-    description:
-      "Post-deployment analytics provide hospitals with actionable data on staff performance and patient outcome correlations.",
-  },
-];
+import { eliteControlPhilosophyPillars } from "../../utility/constants";
 
 const EliteControlPhilosophySection = () => {
   return (
@@ -30,9 +11,11 @@ const EliteControlPhilosophySection = () => {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
           <Reveal className="flex w-full min-w-0 justify-center lg:justify-start">
             <div className="relative h-[420px] w-full max-w-[560px] overflow-hidden rounded-[24px] shadow-[0px_20px_50px_rgba(0,0,0,0.18)] sm:h-[560px] lg:h-[700px]">
-              <img
+              <Image
                 src="/images/staffton_transformed_image.svg"
                 alt="Elite Control"
+                width={560}
+                height={700}
                 className="h-full w-full object-cover"
               />
 
@@ -40,11 +23,11 @@ const EliteControlPhilosophySection = () => {
 
               <div className="absolute bottom-6 left-6 right-6 z-10 sm:bottom-8 sm:left-8 sm:right-8">
                 <h2 className="text-[24px] font-bold leading-[32px] text-white sm:text-[32px] sm:leading-[38px] lg:text-[36px] lg:leading-[42px]">
-                  "Staffton transformed
+                  &ldquo;Staffton transformed
                   <br />
-                  our surgical department's
+                  our surgical department&apos;s
                   <br />
-                  efficiency overnight."
+                  efficiency overnight.&rdquo;
                 </h2>
 
                 <p className="mt-3 text-[16px] font-medium leading-7 text-white/80 sm:mt-4 sm:text-[18px]">
@@ -66,7 +49,7 @@ const EliteControlPhilosophySection = () => {
             </Reveal>
 
             <StaggerContainer className="flex flex-col gap-10 sm:gap-12">
-              {philosophyData.map((item, index) => (
+              {eliteControlPhilosophyPillars.map((item, index) => (
                 <StaggerItem key={index} className="flex items-start gap-4 sm:gap-6">
                   <div className="flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-[12px] border border-[#D7E3F4] bg-white">
                     <span className="text-[16px] font-bold leading-6 text-[#0D9488]">

@@ -1,27 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
-
-const bottomCards = [
-  {
-    title: "Live Telemetry",
-    description:
-      "Monitor candidate pipeline in real-time as soon as there is progress.",
-    icon: "/live_telemetry_icon.svg",
-  },
-  {
-    title: "Instant Notifications",
-    description:
-      "Get notified on email and platform for candidate related updates.",
-    icon: "/notification_icon.svg",
-  },
-  {
-    title: "Leakage Proof",
-    description:
-      "Pipelines to ensure you dont miss out on any candidate you shortlisted.",
-    icon: "/wallet_icon.svg",
-  },
-];
+import { medicalSovereigntySubFeatures } from "../../utility/constants";
 
 const MedicalSovereigntySection = () => {
   return (
@@ -41,9 +22,11 @@ const MedicalSovereigntySection = () => {
 
           <StaggerContainer className="grid grid-cols-1 gap-6 lg:grid-cols-12">
             <StaggerItem className="flex flex-col gap-8 rounded-[24px] border border-[#C2C6D60D] bg-white p-6 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] sm:p-8 lg:col-span-8 lg:p-10">
-              <img
+              <Image
                 src="/verified_icon.svg"
                 alt="Verified Icon"
+                width={46}
+                height={46}
                 className="h-[46px] w-[46px] shrink-0 object-contain"
               />
 
@@ -60,9 +43,11 @@ const MedicalSovereigntySection = () => {
               </div>
 
               <div className="w-full overflow-hidden rounded-[16px] border border-[#E5E7EB]">
-                <img
+                <Image
                   src="/images/credentialing_dashboard_image.svg"
                   alt="Credential Dashboard"
+                  width={750}
+                  height={450}
                   className="block h-auto w-full max-w-full object-cover opacity-80"
                 />
               </div>
@@ -70,9 +55,11 @@ const MedicalSovereigntySection = () => {
 
             <StaggerItem className="flex min-h-[420px] flex-col justify-between rounded-[24px] bg-[#0D9488] p-6 sm:min-h-[480px] sm:p-8 lg:col-span-4 lg:min-h-[528px] lg:p-10">
               <div className="flex flex-col gap-8">
-                <img
+                <Image
                   src="/network_icon.svg"
                   alt="Network Icon"
+                  width={46}
+                  height={46}
                   className="h-[46px] w-[46px] shrink-0 object-contain"
                 />
 
@@ -99,14 +86,16 @@ const MedicalSovereigntySection = () => {
               </div>
             </StaggerItem>
 
-            {bottomCards.map((card, index) => (
+            {medicalSovereigntySubFeatures.map((card, index) => (
               <StaggerItem
                 key={index}
                 className="flex flex-col gap-6 rounded-[24px] border border-[#C2C6D60D] bg-white p-6 sm:min-h-[250px] sm:p-8 lg:col-span-4"
               >
-                <img
+                <Image
                   src={card.icon}
                   alt={card.title}
+                  width={23}
+                  height={23}
                   className="h-[22.5px] w-[22.5px] shrink-0 object-contain"
                 />
 
