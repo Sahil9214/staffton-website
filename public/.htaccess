@@ -1,0 +1,20 @@
+# Next.js static export (output: "export", trailingSlash: true)
+# Serves each route's index.html on refresh — do NOT rewrite unknown paths to /index.html.
+
+Options -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Canonical trailing slash when a route folder exists (e.g. /for-professionals -> /for-professionals/)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !/$
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+)$ $1/ [R=301,L]
+
+# Serve the pre-rendered page for directory routes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteCond %{REQUEST_FILENAME}index.html -f
+RewriteRule ^(.+)/$ $1/index.html [L]
+
+ErrorDocument 404 /404.html

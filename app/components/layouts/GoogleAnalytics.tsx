@@ -1,81 +1,110 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const GA_MEASUREMENT_ID = "G-HHD13QQTT7";
+const CONSENT_KEY = "staffton-cookie-consent";
 
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
+    gtag: (...args: unknown[]) => void;
   }
 }
 
+function readAnalyticsConsent(): boolean {
+  try {
+    const stored = localStorage.getItem(CONSENT_KEY);
+    if (!stored) return false;
+    return !!JSON.parse(stored).analytics;
+  } catch {
+    return false;
+  }
+}
+
+function trackPageView(path?: string) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", "page_view", {
+    page_path: path ?? window.location.pathname,
+    page_title: document.title,
+  });
+}
+
+// Must run before gtag.js loads — sets consent from localStorage synchronously
+const consentInitScript = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  var hasConsent = false;
+  try {
+    var stored = localStorage.getItem('${CONSENT_KEY}');
+    if (stored) hasConsent = !!JSON.parse(stored).analytics;
+  } catch(e) {}
+  gtag('consent', 'default', {
+    analytics_storage: hasConsent ? 'granted' : 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied'
+  });
+`;
+
 export default function GoogleAnalytics() {
+  const pathname = usePathname();
+  const isInitialPathname = useRef(true);
+
   useEffect(() => {
-    // 1. Initialize dataLayer and gtag helper
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag() {
-      // eslint-disable-next-line prefer-rest-params
-      window.dataLayer.push(arguments);
-    };
-
-    // 2. Check existing consent in localStorage
-    const storedConsent = localStorage.getItem("staffton-cookie-consent");
-    let hasAnalyticsConsent = false;
-    if (storedConsent) {
-      try {
-        const parsed = JSON.parse(storedConsent);
-        hasAnalyticsConsent = !!parsed.analytics;
-      } catch (e) {
-        console.error("Error parsing cookie consent:", e);
-      }
-    }
-
-    // 3. Set default consent state
-    window.gtag("consent", "default", {
-      analytics_storage: hasAnalyticsConsent ? "granted" : "denied",
-      ad_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied",
-    });
-
-    // 4. Listen for the custom event from CookieConsent component
     const handleConsentUpdate = (event: Event) => {
-      const customEvent = event as CustomEvent;
-      const preferences = customEvent.detail;
-      if (preferences && typeof preferences.analytics !== "undefined") {
-        window.gtag("consent", "update", {
-          analytics_storage: preferences.analytics ? "granted" : "denied",
-        });
+      const preferences = (event as CustomEvent).detail;
+      if (!preferences || typeof preferences.analytics === "undefined") return;
+
+      window.gtag("consent", "update", {
+        analytics_storage: preferences.analytics ? "granted" : "denied",
+      });
+
+      if (preferences.analytics) {
+        trackPageView();
       }
     };
 
     window.addEventListener("cookie-consent-updated", handleConsentUpdate);
-
-    return () => {
+    return () =>
       window.removeEventListener("cookie-consent-updated", handleConsentUpdate);
-    };
   }, []);
+
+  useEffect(() => {
+    if (!readAnalyticsConsent()) return;
+
+    if (isInitialPathname.current) {
+      isInitialPathname.current = false;
+      return;
+    }
+
+    trackPageView(pathname);
+  }, [pathname]);
+
+  const handleGtagLoad = () => {
+    window.gtag("js", new Date());
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      send_page_view: false,
+    });
+
+    if (readAnalyticsConsent()) {
+      trackPageView();
+    }
+  };
 
   return (
     <>
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script id="ga-consent-init" strategy="beforeInteractive">
+        {consentInitScript}
+      </Script>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
+        onLoad={handleGtagLoad}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}', {
-            page_path: window.location.pathname,
-          });
-        `}
-      </Script>
     </>
   );
 }

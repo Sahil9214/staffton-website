@@ -19,6 +19,8 @@ export const plusJakartaSans = localFont({
     },
   ],
   variable: '--font-plus-jakarta',
+  display: 'swap',
+  preload: true,
 })
 
 export const inter = localFont({
@@ -40,6 +42,8 @@ export const inter = localFont({
     },
   ],
   variable: '--font-inter',
+  display: 'swap',
+  preload: false,
 })
 
 export const manrope = localFont({
@@ -61,4 +65,22 @@ export const manrope = localFont({
     },
   ],
   variable: '--font-manrope',
+  display: 'swap',
+  preload: false,
+})
+
+import { Syncopate, Instrument_Sans } from 'next/font/google'
+
+export const syncopate = Syncopate({
+  weight: ['700'],
+  subsets: ['latin'],
+  variable: '--font-syncopate',
+  display: 'swap',
+})
+
+export const instrumentSans = Instrument_Sans({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-instrument-sans',
+  display: 'swap',
 })

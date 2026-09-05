@@ -9,6 +9,84 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Brand — primary CTA & interactive */
+  --color-brand: #0f9d94;
+  --color-brand-hover: #0c857d;
+  --color-brand-dark: #0b7069;
+  --color-brand-mid: #0e8880;
+
+  /* Accent — teal highlights & secondary brand */
+  --color-accent: #0d9488;
+  --color-accent-light: #5eead4;
+  --color-accent-lighter: #99f6e4;
+  --color-accent-mint: #86f2e4;
+  --color-accent-teal: #00bba7;
+  --color-accent-teal-dark: #006f66;
+  --color-accent-teal-darker: #006a61;
+  --color-accent-highlight: #005c54;
+
+  /* Badge variants */
+  --color-badge-mint: #ccfbf1;
+  --color-badge-soft: #f0fdfa;
+  --color-badge-hospital-bg: #d9e2ff;
+  --color-badge-hospital-text: #001944;
+  --color-badge-professional-bg: #89f5e7;
+  --color-badge-professional-text: #00201d;
+
+  /* Gradients */
+  --color-gradient-brand-via: #13b8a6;
+  --color-gradient-brand-to: #53e0d0;
+  --color-gradient-og-from: #0f172a;
+  --color-gradient-og-to: #134e4a;
+
+  /* Text */
+  --color-heading: #0f172a;
+  --color-title: #191c1e;
+  --color-body: #424754;
+  --color-nav: #344054;
+  --color-muted: #64748b;
+  --color-muted-gray: #5f6368;
+  --color-neutral: #737373;
+  --color-faq-title: #261b07;
+  --color-faq-body: #5a5246;
+  --color-slate: #94a3b8;
+
+  /* Surfaces */
+  --color-surface-page: #f8fafc;
+  --color-surface-section: #f7f9fb;
+  --color-surface-section-alt: #f9fafb;
+  --color-surface-gray: #f5f5f5;
+  --color-surface-hover: #f1f5f9;
+  --color-surface-icon: #e8eef7;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-light: #e5e7eb;
+  --color-border-subtle: #e6e6e6;
+  --color-border-input: #c2c6d6;
+  --color-border-blue: #d7e3f4;
+
+  /* Dark surfaces */
+  --color-dark: #0f172a;
+  --color-dark-card: #111827;
+  --color-dark-surface: #1e293b;
+  --color-dark-border: #334155;
+  --color-white: #ffffff;
+
+  /* Standardized Colors */
+  --color-border-gray: #e5e5e5;
+  --color-muted-light: #a3a3a3;
+  --color-brand-navy: #0a3254;
+  --color-surface-offwhite: #fafafa;
+  --color-brand-darker: #0b4d47;
+
+  /* Shadows */
+  --shadow-accent: 0px 4px 12px rgba(13, 148, 136, 0.2);
+  --shadow-soft: 0px 4px 24px rgba(0, 0, 0, 0.05);
+
+  /* Custom Breakpoints */
+  --breakpoint-navbar: 1100px;
+
   /* Default font */
   --font-sans: var(--font-plus-jakarta);
 
@@ -40,3 +118,12 @@ body {
   color: var(--foreground);
   font-family: var(--font-plus-jakarta);
 }
+
+@utility common-container {
+  @apply max-w-[1280px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12;
+}
+
+@utility section-container {
+  @apply max-w-[1280px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-16 md:py-20 lg:py-24;
+}
+

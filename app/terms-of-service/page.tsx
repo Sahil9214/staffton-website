@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import LegalPageLayout, { LegalSection } from "../components/LegalPageLayout";
+import { pageMetadata } from "../utility/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Service - Staffton Health",
-  description: "Review the Terms of Service for Staffton Health, governing platform eligibility, account registration, credential verification, and acceptable use guidelines.",
-};
+export const metadata = pageMetadata.termsOfService;
 
 const termsSections: LegalSection[] = [
   {

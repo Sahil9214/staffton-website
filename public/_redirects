@@ -1,0 +1,16 @@
+# Netlify / compatible static hosts — trailing-slash canonical URLs for exported routes.
+# IMPORTANT: Do not add a SPA fallback (/* /index.html 200). This site is a static MPA.
+
+/for-hospitals/     /best-medical-staffing-companies/  301!
+/for-hospitals      /best-medical-staffing-companies/  301!
+/hire-talent/       /best-medical-staffing-companies/  301!
+/hire-talent        /best-medical-staffing-companies/  301!
+/best-medical-staffing-companies  /best-medical-staffing-companies/  301
+/for-professionals/ /nurse-doctor-jobs-india/ 301!
+/for-professionals   /nurse-doctor-jobs-india/ 301!
+/nurse-doctor-jobs-india /nurse-doctor-jobs-india/ 301
+/about              /about/              301
+/contact            /contact/            301
+/privacy-policy     /privacy-policy/     301
+/terms-of-service   /terms-of-service/   301
+/cookie-policy      /cookie-policy/      301

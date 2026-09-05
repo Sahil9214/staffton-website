@@ -14,15 +14,23 @@ export default function CookieConsent() {
   const [analyticsConsent, setAnalyticsConsent] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const mountTimer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+
     const consent = localStorage.getItem("staffton-cookie-consent");
+    let consentTimer: NodeJS.Timeout | undefined;
     if (!consent) {
       // Show banner if no consent choice is saved
-      const timer = setTimeout(() => {
+      consentTimer = setTimeout(() => {
         setIsVisible(true);
       }, 1500); // Small delay for better UX
-      return () => clearTimeout(timer);
     }
+
+    return () => {
+      clearTimeout(mountTimer);
+      if (consentTimer) clearTimeout(consentTimer);
+    };
   }, []);
 
   if (!mounted) return null;
@@ -75,18 +83,18 @@ export default function CookieConsent() {
             {!showSettings ? (
               <>
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#0F9D94]/10 rounded-xl text-[#0F9D94] shrink-0">
+                  <div className="p-3 bg-brand/10 rounded-xl text-brand shrink-0">
                     <Cookie className="w-6 h-6 animate-pulse" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <h4 className="text-[16px] font-bold text-slate-900 flex items-center gap-2">
+                    <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
                       Cookie Preference & Consent
                     </h4>
                     <p className="text-[13px] leading-relaxed text-slate-600">
                       We use cookies to improve your experience, enhance security, analyze platform usage, and provide better services. You can manage your cookie preferences at any time. Read our{" "}
                       <Link
-                        href="/cookie-policy"
-                        className="text-[#0F9D94] hover:underline font-semibold"
+                        href="/cookie-policy/"
+                        className="text-brand hover:underline font-semibold"
                       >
                         Cookie Policy
                       </Link>{" "}
@@ -99,7 +107,7 @@ export default function CookieConsent() {
                 <div className="flex flex-col sm:flex-row gap-2.5 mt-2">
                   <button
                     onClick={handleAcceptAll}
-                    className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-[#0F9D94] text-white text-[13px] font-bold hover:bg-[#0c857d] active:scale-[0.98] transition-all"
+                    className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-brand text-white text-[13px] font-bold hover:bg-brand-hover active:scale-[0.98] transition-all"
                   >
                     Accept All
                   </button>
@@ -115,7 +123,7 @@ export default function CookieConsent() {
                 <div className="flex justify-between items-center border-t border-slate-100 pt-3 mt-1 text-[12px]">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="inline-flex items-center gap-1 text-slate-500 hover:text-[#0F9D94] font-semibold transition-colors"
+                    className="inline-flex items-center gap-1 text-slate-500 hover:text-brand font-semibold transition-colors"
                   >
                     <Settings className="w-3.5 h-3.5" />
                     Customize Preferences
@@ -131,8 +139,8 @@ export default function CookieConsent() {
                 className="flex flex-col gap-4"
               >
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h4 className="text-[15px] font-bold text-slate-900 flex items-center gap-2">
-                    <Settings className="w-4 h-4 text-[#0F9D94]" />
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <Settings className="w-4 h-4 text-brand" />
                     Cookie Preferences
                   </h4>
                   <button
@@ -149,7 +157,7 @@ export default function CookieConsent() {
                   {/* Category: Essential */}
                   <div className="flex items-start justify-between gap-4 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
                     <div className="flex items-start gap-3">
-                      <Shield className="w-4.5 h-4.5 text-[#0F9D94] mt-0.5 shrink-0" />
+                      <Shield className="w-4.5 h-4.5 text-brand mt-0.5 shrink-0" />
                       <div className="flex flex-col gap-0.5">
                         <span className="text-[12px] font-bold text-slate-900">Essential (Required)</span>
                         <span className="text-[11px] leading-relaxed text-slate-500">
@@ -157,7 +165,7 @@ export default function CookieConsent() {
                         </span>
                       </div>
                     </div>
-                    <span className="text-[11px] text-[#0F9D94] bg-[#0F9D94]/10 px-2 py-0.5 rounded-md font-bold self-start mt-0.5">
+                    <span className="text-[11px] text-brand bg-brand/10 px-2 py-0.5 rounded-md font-bold self-start mt-0.5">
                       Always Active
                     </span>
                   </div>
@@ -165,7 +173,7 @@ export default function CookieConsent() {
                   {/* Category: Security */}
                   <div className="flex items-start justify-between gap-4 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
                     <div className="flex items-start gap-3">
-                      <Shield className="w-4.5 h-4.5 text-[#0F9D94] mt-0.5 shrink-0" />
+                      <Shield className="w-4.5 h-4.5 text-brand mt-0.5 shrink-0" />
                       <div className="flex flex-col gap-0.5">
                         <span className="text-[12px] font-bold text-slate-900">Security (Required)</span>
                         <span className="text-[11px] leading-relaxed text-slate-500">
@@ -173,7 +181,7 @@ export default function CookieConsent() {
                         </span>
                       </div>
                     </div>
-                    <span className="text-[11px] text-[#0F9D94] bg-[#0F9D94]/10 px-2 py-0.5 rounded-md font-bold self-start mt-0.5">
+                    <span className="text-[11px] text-brand bg-brand/10 px-2 py-0.5 rounded-md font-bold self-start mt-0.5">
                       Always Active
                     </span>
                   </div>
@@ -194,7 +202,7 @@ export default function CookieConsent() {
                     <button
                       onClick={() => setFunctionalConsent(!functionalConsent)}
                       className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                        functionalConsent ? "bg-[#0F9D94]" : "bg-slate-200"
+                        functionalConsent ? "bg-brand" : "bg-slate-200"
                       }`}
                     >
                       <span
@@ -221,7 +229,7 @@ export default function CookieConsent() {
                     <button
                       onClick={() => setAnalyticsConsent(!analyticsConsent)}
                       className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                        analyticsConsent ? "bg-[#0F9D94]" : "bg-slate-200"
+                        analyticsConsent ? "bg-brand" : "bg-slate-200"
                       }`}
                     >
                       <span
@@ -238,7 +246,7 @@ export default function CookieConsent() {
                 <div className="flex gap-2.5 mt-2 border-t border-slate-100 pt-3">
                   <button
                     onClick={handleSavePreferences}
-                    className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-[#0F9D94] text-white text-[13px] font-bold hover:bg-[#0c857d] active:scale-[0.98] transition-all"
+                    className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-brand text-white text-[13px] font-bold hover:bg-brand-hover active:scale-[0.98] transition-all"
                   >
                     Save Preferences
                   </button>

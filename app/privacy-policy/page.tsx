@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import LegalPageLayout, { LegalSection } from "../components/LegalPageLayout";
+import { pageMetadata } from "../utility/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy - Staffton Health",
-  description: "Read the Staffton Health Privacy Policy to understand how we collect, use, store, and protect your personal information, resumes, and credentials.",
-};
+export const metadata = pageMetadata.privacyPolicy;
 
 const privacySections: LegalSection[] = [
   {

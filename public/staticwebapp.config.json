@@ -1,0 +1,86 @@
+{
+  "navigationFallback": {
+    "rewrite": "/404.html",
+    "exclude": [
+      "/_next/*",
+      "/images/*",
+      "/fonts/*",
+      "/opengraph-image*",
+      "/icon*",
+      "/*.{css,js,json,svg,ico,txt,xml,png,woff,woff2,ttf,map}"
+    ]
+  },
+  "routes": [
+    {
+      "route": "/hire-talent",
+      "redirect": "/best-medical-staffing-companies/",
+      "statusCode": 301
+    },
+    {
+      "route": "/hire-talent/",
+      "redirect": "/best-medical-staffing-companies/",
+      "statusCode": 301
+    },
+    {
+      "route": "/for-hospitals",
+      "redirect": "/best-medical-staffing-companies/",
+      "statusCode": 301
+    },
+    {
+      "route": "/for-hospitals/",
+      "redirect": "/best-medical-staffing-companies/",
+      "statusCode": 301
+    },
+    {
+      "route": "/best-medical-staffing-companies",
+      "redirect": "/best-medical-staffing-companies/",
+      "statusCode": 301
+    },
+    {
+      "route": "/for-professionals",
+      "redirect": "/nurse-doctor-jobs-india/",
+      "statusCode": 301
+    },
+    {
+      "route": "/for-professionals/",
+      "redirect": "/nurse-doctor-jobs-india/",
+      "statusCode": 301
+    },
+    {
+      "route": "/nurse-doctor-jobs-india",
+      "redirect": "/nurse-doctor-jobs-india/",
+      "statusCode": 301
+    },
+    {
+      "route": "/about",
+      "redirect": "/about/",
+      "statusCode": 301
+    },
+    {
+      "route": "/contact",
+      "redirect": "/contact/",
+      "statusCode": 301
+    },
+    {
+      "route": "/privacy-policy",
+      "redirect": "/privacy-policy/",
+      "statusCode": 301
+    },
+    {
+      "route": "/terms-of-service",
+      "redirect": "/terms-of-service/",
+      "statusCode": 301
+    },
+    {
+      "route": "/cookie-policy",
+      "redirect": "/cookie-policy/",
+      "statusCode": 301
+    }
+  ],
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html",
+      "statusCode": 404
+    }
+  }
+}

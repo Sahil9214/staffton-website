@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import LegalPageLayout, { LegalSection } from "../components/LegalPageLayout";
+import { pageMetadata } from "../utility/seo";
 
-export const metadata: Metadata = {
-  title: "Cookie Policy - Staffton Health",
-  description: "Read the Staffton Health Cookie Policy to understand how we use cookies, tracking technologies, and how you can manage your preferences.",
-};
+export const metadata = pageMetadata.cookiePolicy;
 
 const cookieSections: LegalSection[] = [
   {
