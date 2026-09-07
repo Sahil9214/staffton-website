@@ -15,6 +15,7 @@ import PlatformPreviewSection from "./components/PlatformPreviewSection";
 import TrustSecuritySection from "./components/TrustSecuritySection";
 import FinalCTASection from "./components/FinalCTASection";
 import { pageMetadata } from "../utility/seo";
+import { APP_AUTH_URLS } from "../utility/app-auth-urls";
 import { SITE_NAME, SITE_URL } from "../utility/site";
 
 export const metadata = pageMetadata.forProfessionals;
@@ -88,6 +89,7 @@ const NurseDoctorJobInIndia = async () => {
         features={features}
         imageSrc={imageSrc}
         imageAlt={imageAlt}
+        ctaHref={APP_AUTH_URLS.professionalRegister}
       />
       <StatsSection />
       <FeaturesSection />

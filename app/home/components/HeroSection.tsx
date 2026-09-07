@@ -13,6 +13,7 @@ type HeroSectionProps = {
   features?: readonly string[];
   imageSrc?: string;
   imageAlt?: string;
+  ctaHref?: string;
 };
 
 const DEFAULT_IMAGE = {
@@ -27,6 +28,7 @@ const HeroSection = ({
   features = homeHeroSection.features,
   imageSrc = DEFAULT_IMAGE.src,
   imageAlt = DEFAULT_IMAGE.alt,
+  ctaHref = APP_AUTH_URLS.homeSignup,
 }: HeroSectionProps) => {
   return (
     <section className="w-full overflow-hidden bg-surface-page">
@@ -57,7 +59,7 @@ const HeroSection = ({
               ))}
             </div>
 
-            <GetStartedFreeButton href={APP_AUTH_URLS.homeSignup} />
+            <GetStartedFreeButton href={ctaHref} />
           </div>
 
           <div className="flex w-full min-w-0 flex-1 items-center justify-center lg:justify-end">

@@ -25,6 +25,7 @@ export const APP_AUTH_URLS = {
 
   /** Jobs / professionals */
   professionalLogin: `${APP_BASE_URL}/auth/login`,
+  professionalRegister: `${APP_BASE_URL}/auth/register`,
   professionalSignup: `${APP_BASE_URL}/auth/register?role=job`,
 } as const;
 
@@ -57,7 +58,7 @@ export const getAuthUrls = (pathname: string) => {
   if (isJobsPath(path)) {
     return {
       login: APP_AUTH_URLS.professionalLogin,
-      signup: APP_AUTH_URLS.professionalSignup,
+      signup: APP_AUTH_URLS.professionalRegister,
     };
   }
 

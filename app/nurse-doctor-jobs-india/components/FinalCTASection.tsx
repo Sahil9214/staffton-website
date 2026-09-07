@@ -20,7 +20,7 @@ const FinalCTASection = () => {
           </p>
 
           <GetStartedFreeButton
-            href={APP_AUTH_URLS.professionalSignup}
+            href={APP_AUTH_URLS.professionalRegister}
             variant="inverse"
             className="w-[208px]"
           >

@@ -61,7 +61,7 @@ const TrustSecuritySection = () => {
             </StaggerContainer>
 
             <Reveal>
-              <GetStartedFreeButton href={APP_AUTH_URLS.professionalSignup}>
+              <GetStartedFreeButton href={APP_AUTH_URLS.professionalRegister}>
                 {ctaLabel}
               </GetStartedFreeButton>
             </Reveal>
