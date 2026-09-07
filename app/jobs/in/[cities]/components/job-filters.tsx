@@ -72,6 +72,10 @@ const JobFilters = ({
 
   const selectedSalary = salaries.length > 0 && salaries[0] !== ALL_SALARIES_ID ? salaries[0] : ALL_SALARIES_ID;
   const selectedRole = roles.length > 0 && roles[0] !== ALL_ROLES_ID ? roles[0] : ALL_ROLES_ID;
+  const roleResetHref =
+    citySlug && selectedRole !== ALL_ROLES_ID
+      ? `/jobs/in/${citySlug}/`
+      : undefined;
 
   const appliedCount =
     (experience > 0 ? 1 : 0) +
@@ -105,14 +109,23 @@ const JobFilters = ({
           <p className="font-sans text-[13px] font-medium leading-[18px] text-accent">
             Applied ({appliedCount})
           </p>
-          {appliedCount > 0 && onClearAll ? (
-            <button
-              type="button"
-              onClick={onClearAll}
-              className="cursor-pointer font-sans text-xs text-muted-light hover:text-heading hover:underline"
-            >
-              Reset
-            </button>
+          {appliedCount > 0 && (roleResetHref || onClearAll) ? (
+            roleResetHref ? (
+              <Link
+                href={roleResetHref}
+                className="cursor-pointer font-sans text-xs text-muted-light hover:text-heading hover:underline"
+              >
+                Reset
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={onClearAll}
+                className="cursor-pointer font-sans text-xs text-muted-light hover:text-heading hover:underline"
+              >
+                Reset
+              </button>
+            )
           ) : null}
         </div>
       </div>

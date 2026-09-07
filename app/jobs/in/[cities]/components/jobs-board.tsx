@@ -299,18 +299,21 @@ const JobsBoard = ({
   };
 
   const handleClearAll = () => {
+    if (isRolePage) {
+      router.push(`/jobs/in/${citySlug}/`);
+      return;
+    }
+
     setQuery("");
     setSalaries([]);
-    if (!isRolePage) {
-      setRoles(["all"]);
-    }
+    setRoles(["all"]);
     setExperience(0);
     setPage(1);
     syncUrlParams({
       page: 1,
       q: "",
       salaries: [],
-      roles: isRolePage && activeRole ? [activeRole] : ["all"],
+      roles: ["all"],
       experience: 0,
     });
   };

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Hospital, User, AlertTriangle, Link as LinkIcon } from "lucide-react";
-import { HIRE_TALENT_PATH } from "../../utility/site";
+import { APP_AUTH_URLS } from "../../utility/app-auth-urls";
 import Reveal from "../../components/motion/Reveal";
 import { StaggerContainer, StaggerItem } from "../../components/motion/Stagger";
 
@@ -12,8 +12,8 @@ const ConnectOptionsSection = () => {
       title: "For Hospitals",
       description:
         "Partner with Staffton to automate your credential verification, manage shifts, and build resilient talent pools.",
-      linkText: "Schedule a Demo",
-      linkUrl: `${HIRE_TALENT_PATH}/`,
+      linkText: "Get Started",
+      linkUrl: APP_AUTH_URLS.hospitalSignup,
     },
     {
       icon: <User className="w-6 h-6 text-accent" />,
@@ -21,7 +21,7 @@ const ConnectOptionsSection = () => {
       description:
         "Access top-tier healthcare positions nationwide. Enjoy direct messaging with recruiters and verified profile setup.",
       linkText: "Browse Open Positions",
-      linkUrl: "/nurse-doctor-jobs-india/",
+      linkUrl: APP_AUTH_URLS.professionalSignup,
     },
     {
       icon: <AlertTriangle className="w-6 h-6 text-accent" />,
@@ -65,9 +65,13 @@ const ConnectOptionsSection = () => {
                 </p>
               </div>
 
-              {option.linkUrl.startsWith("tel:") ? (
+              {option.linkUrl.startsWith("tel:") ||
+              option.linkUrl.startsWith("http") ? (
                 <a
                   href={option.linkUrl}
+                  {...(option.linkUrl.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="flex flex-row items-center gap-2 text-accent group-hover:text-brand-hover transition-colors"
                 >
                   <LinkIcon className="w-4 h-4 text-accent group-hover:text-brand-hover transition-colors" />
