@@ -1027,12 +1027,13 @@ export const seoSpecialtiesSection = {
 /**
  * Homepage blog carousel copy (Figma: Section — Blog Cards).
  */
+// heelo
 export const homeBlogSection = {
   badge: "Insights & Updates",
   heading: "Latest from Our Blog",
   description:
     "Stay ahead with professional career guides, healthcare recruitment insights, and administrative workflows curated by clinical staffing experts.",
-  ctaLabel: "All Blogs",
+  ctaLabel: "View All Blogs",
   ctaHref: "https://stafftonhealth.com/blog/",
 };
 

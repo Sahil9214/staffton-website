@@ -7,7 +7,6 @@ import { ChevronRight } from "lucide-react";
 export type FilterOption = {
   id: string;
   label: string;
-  count?: number;
 };
 
 const ALL_ROLES_ID = "all";
@@ -15,13 +14,13 @@ const ALL_SALARIES_ID = "all";
 
 export const SALARY_OPTIONS: FilterOption[] = [
   { id: ALL_SALARIES_ID, label: "All Salaries" },
-  { id: "0-3", label: "0-3 Lakhs", count: 17 },
-  { id: "3-6", label: "3-6 Lakhs", count: 25 },
-  { id: "6-10", label: "6-10 Lakhs", count: 10 },
-  { id: "10-15", label: "10-15 Lakhs", count: 3 },
-  { id: "15-25", label: "15-25 Lakhs", count: 2 },
-  { id: "25-50", label: "25-50 Lakhs", count: 1 },
-  { id: "50-plus", label: "50+ Lakhs", count: 1 },
+  { id: "0-3", label: "0-3 Lakhs" },
+  { id: "3-6", label: "3-6 Lakhs" },
+  { id: "6-10", label: "6-10 Lakhs" },
+  { id: "10-15", label: "10-15 Lakhs" },
+  { id: "15-25", label: "15-25 Lakhs" },
+  { id: "25-50", label: "25-50 Lakhs" },
+  { id: "50-plus", label: "50+ Lakhs" },
 ];
 
 export const ROLE_OPTIONS: FilterOption[] = [
@@ -311,11 +310,6 @@ function RadioGroup({
               >
                 {option.label}
               </span>
-              {option.count != null ? (
-                <span className="shrink-0 pl-[5px] font-sans text-sm font-medium leading-[18px] text-muted-light">
-                  ({option.count})
-                </span>
-              ) : null}
             </span>
           </>
         );
