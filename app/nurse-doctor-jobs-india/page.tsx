@@ -1,9 +1,13 @@
 import React from "react";
 import HeroSection from "../home/components/HeroSection";
 import StatsSection from "../components/sections/StatsSection";
+import BlogSection from "../home/components/BlogSection";
 import {
+  getAllBlogs,
+  homeBlogSection,
   nurseDoctorJobsFaqSection,
   nurseDoctorJobsHeroSection,
+  stripWordpressHtml,
 } from "../utility/constants";
 import FAQSection from "../components/sections/FAQSection";
 import FeaturesSection from "./components/FeaturesSection";
@@ -61,7 +65,8 @@ const faqJsonLd = {
 
 const pageJsonLd = [breadcrumbJsonLd, reviewJsonLd, faqJsonLd];
 
-const NurseDoctorJobInIndia = () => {
+const NurseDoctorJobInIndia = async () => {
+  const blogData = await getAllBlogs(3);
   const { badge, heading, subtext, features, imageSrc, imageAlt } =
     nurseDoctorJobsHeroSection;
 
@@ -89,6 +94,26 @@ const NurseDoctorJobInIndia = () => {
       <PlatformPreviewSection />
       <TrustSecuritySection />
       <FinalCTASection />
+      <BlogSection
+        badge={homeBlogSection.badge}
+        title={homeBlogSection.heading}
+        description={homeBlogSection.description}
+        ctaLabel={homeBlogSection.ctaLabel}
+        ctaHref={homeBlogSection.ctaHref}
+        blogPosts={(blogData ?? []).map((post) => ({
+          badge: stripWordpressHtml(
+            post?._embedded?.["wp:term"]?.[0]?.[0]?.name ?? "Insights"
+          ),
+          time: "5 MINS READ",
+          imageAlt: stripWordpressHtml(post?.title?.rendered ?? ""),
+          link: post?.link ?? "",
+          id: String(post.id),
+          title: stripWordpressHtml(post?.title?.rendered ?? ""),
+          description: stripWordpressHtml(post.excerpt?.rendered ?? "", 120),
+          date: post.date ?? "",
+          imageSrc: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ?? "",
+        }))}
+      />
       <FAQSection
         badge={nurseDoctorJobsFaqSection.badge}
         heading={nurseDoctorJobsFaqSection.heading}

@@ -4,7 +4,7 @@ import { plusJakartaSans, inter, manrope, syncopate, instrumentSans } from './fo
 import Navbar from "./components/layouts/Navbar";
 import Footer from "./components/layouts/Footer";
 import CookieConsent from "./components/layouts/CookieConsent";
-// import GoogleAnalytics from "./components/layouts/GoogleAnalytics";
+import GoogleAnalytics from "./components/layouts/GoogleAnalytics";
 // import {
 //   GoogleTagManagerHead,
 //   GoogleTagManagerBody,
