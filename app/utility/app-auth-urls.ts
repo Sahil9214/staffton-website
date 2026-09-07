@@ -16,8 +16,8 @@ export const APP_AUTH_URLS = {
   homeSignup: HOME_AUTH_URLS.signup,
 
   /** Other marketing pages (About, Contact, etc.) */
-  login: `/contact-us/`,
-  signup: `/contact-us/`,
+  login: `${APP_BASE_URL}/auth/login`,
+  signup: `${APP_BASE_URL}/`,
 
   /** Hire Talent / hospitals */
   hospitalLogin: `${APP_BASE_URL}/auth/login`,

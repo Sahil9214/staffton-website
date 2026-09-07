@@ -342,7 +342,7 @@ const ContactGridSection = () => {
                         value={fields.phoneNumber}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        placeholder="5550000000"
+                        placeholder="+91 9875197343"
                         maxLength={PHONE_MAX_DIGITS}
                         inputMode="numeric"
                         autoComplete="tel"
