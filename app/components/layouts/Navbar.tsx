@@ -305,6 +305,8 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href={loginHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-9 items-center justify-center px-4 text-sm font-semibold text-nav hover:text-brand transition-all duration-200"
               >
                 Login
@@ -312,6 +314,8 @@ const Navbar = () => {
 
               <Link
                 href={signupHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-10 items-center justify-center px-6 rounded-[8px] bg-brand text-white text-sm font-semibold hover:bg-brand-hover transition-all duration-200"
               >
                 Sign Up
@@ -488,6 +492,8 @@ const Navbar = () => {
               {/* Login Button */}
               <Link
                 href={loginHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={closeMenu}
                 className="flex w-full h-[50px] items-center justify-center rounded-xl border border-white text-white text-base font-semibold hover:bg-white hover:text-brand transition-all duration-300"
               >
@@ -497,6 +503,8 @@ const Navbar = () => {
               {/* Sign Up Button */}
               <Link
                 href={signupHref}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={closeMenu}
                 className="flex w-full h-[50px] items-center justify-center rounded-xl bg-white text-brand text-base font-semibold hover:bg-surface-gray transition-all duration-300"
               >
