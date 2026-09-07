@@ -49,9 +49,9 @@ export const SEO_CITIES_API_URL = `${API_BASE_URL}${API_ENDPOINTS.PUBLIC.SEO_CIT
  */
 export const WORDPRESS_API_URL = (
   process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
-  "https://hirium.com/blog/wp-json/wp/v2"
+  "https://stafftonhealth.com/blog/wp-json/wp/v2"
 ).replace(/\/$/, "");
-
+// hello
 export type WordpressRendered = {
   rendered?: string;
 };
