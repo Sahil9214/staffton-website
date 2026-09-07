@@ -46,7 +46,6 @@ export const BlogCardSkeleton = () => {
 const BlogCard = ({
   badge,
   date,
-  time,
   title,
   description,
   imageSrc,
@@ -64,14 +63,14 @@ const BlogCard = ({
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <article className="flex h-full flex-col rounded-xl border border-slate-100 bg-white  transition-shadow duration-200 hover:shadow-[0px_0px_10px_0px_#0000000D]">
-        <div className="relative overflow-hidden bg-surface-hover">
+        <div className="overflow-hidden bg-surface-hover">
           {imageSrc ? (
             <Image
               src={imageSrc}
               alt={imageAlt || title}
               width={329}
               height={215}
-              className="h-auto w-full object-contain"
+              className="h-auto w-full rounded-t-[16px] object-contain"
               loading="lazy"
             />
           ) : (
@@ -81,24 +80,21 @@ const BlogCard = ({
               </span>
             </div>
           )}
-          {category ? (
-            <p className="absolute top-4 left-4 z-20 max-w-[70%] truncate rounded-lg bg-white px-2 py-0.5 text-xs font-semibold text-heading">
-              {category}
-            </p>
-          ) : null}
         </div>
 
         <div className="flex flex-1 flex-col justify-start gap-4 p-4 text-start">
-          <p className="flex items-center gap-2 text-sm text-neutral">
-            {date ? <span>{formatDate(date)}</span> : null}
-            {date && time ? (
-              <span
-                className="h-1 w-1 rounded-full bg-neutral"
-                aria-hidden="true"
-              />
+          <div className="flex items-center justify-between gap-3">
+            {category ? (
+              <p className="max-w-[70%] truncate rounded bg-badge-soft px-2.5 py-1 text-xs font-semibold uppercase text-accent">
+                {category}
+              </p>
             ) : null}
-            {time ? <span>{time}</span> : null}
-          </p>
+            {date ? (
+              <p className="shrink-0 text-[13px] font-medium text-neutral">
+                {formatDate(date)}
+              </p>
+            ) : null}
+          </div>
           <h3 className="line-clamp-2 text-base font-semibold text-heading">
             {title}
           </h3>

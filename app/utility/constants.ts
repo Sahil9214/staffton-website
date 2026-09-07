@@ -1032,8 +1032,8 @@ export const homeBlogSection = {
   heading: "Latest from Our Blog",
   description:
     "Stay ahead with professional career guides, healthcare recruitment insights, and administrative workflows curated by clinical staffing experts.",
-  ctaLabel: "Contact Our Team",
-  ctaHref: "/contact-us/",
+  ctaLabel: "All Blogs",
+  ctaHref: "https://stafftonhealth.com/blog/",
 };
 
 /**
