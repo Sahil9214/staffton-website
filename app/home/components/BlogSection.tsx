@@ -33,7 +33,6 @@ const BlogSection = ({
   const surfaceClass = isWhiteBg ? "bg-white" : "bg-surface-offwhite";
   const visiblePosts = blogPosts.slice(0, VISIBLE_POSTS);
   const hasPosts = isLoading || visiblePosts.length > 0;
-  console.log("_______________",visiblePosts)
   if (error) {
     return (
       <section className={`w-full ${surfaceClass}`}>
@@ -76,7 +75,7 @@ const BlogSection = ({
         )}
 
         <Reveal className="flex justify-center">
-          <GetStartedFreeButton href={ctaHref}>
+          <GetStartedFreeButton href={ctaHref} external={false}>
             {ctaLabel}
           </GetStartedFreeButton>
         </Reveal>
@@ -86,3 +85,5 @@ const BlogSection = ({
 };
 
 export default BlogSection;
+
+// bug fixing 

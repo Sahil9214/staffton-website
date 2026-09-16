@@ -157,20 +157,22 @@ const Footer = () => {
               >
                 Jobs by City
               </h3>
-              <div className="flex flex-row items-start gap-6 w-full">
-                {footerJobCityColumns.map((column, colIdx) => (
-                  <div key={colIdx} className="flex flex-col items-start gap-2 flex-1">
-                    {column.map((city) => (
-                      <Link
-                        key={city}
-                        href={cityJobsHref(city)}
-                        className="w-full font-inter font-normal text-sm leading-[20px] text-muted hover:text-heading transition-colors duration-150"
-                      >
-                        {city}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+              <div className="max-h-[180px] w-full overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]">
+                <div className="flex flex-row items-start gap-6 w-full">
+                  {footerJobCityColumns.map((column, colIdx) => (
+                    <div key={colIdx} className="flex flex-col items-start gap-2 flex-1">
+                      {column.map((city) => (
+                        <Link
+                          key={city}
+                          href={cityJobsHref(city)}
+                          className="w-full font-inter font-normal text-sm leading-[20px] text-muted hover:text-heading transition-colors duration-150"
+                        >
+                          {city}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </nav>
           </div>

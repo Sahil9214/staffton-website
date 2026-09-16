@@ -2,42 +2,57 @@
 
 import { useEffect, useState } from "react";
 import {
-  DEFAULT_SEO_CITIES,
   SEO_CITIES_API_URL,
-  toCitySlug,
+  ensureTrailingSlash,
+  normalizeSeoCitiesResponse,
   type SeoCitiesApiResponse,
+  type SeoCityItem,
+  type SeoCityRole,
 } from "./constants";
+
+export interface CityNavRole {
+  label: string;
+  slug: string;
+  href: string;
+}
 
 export interface CityNavItem {
   name: string;
   href: string;
-  slug?: string;
+  slug: string;
+  hasActiveCityPage: boolean;
+  roles: CityNavRole[];
 }
 
-const formatCityList = (list: { city: string; slug?: string }[]): CityNavItem[] =>
+const toNavRoles = (roles: SeoCityRole[] = []): CityNavRole[] =>
+  roles.map((role) => ({
+    label: role.label,
+    slug: role.slug,
+    href: ensureTrailingSlash(role.url),
+  }));
+
+const formatCityList = (list: SeoCityItem[]): CityNavItem[] =>
   list.map((item) => {
-    let href = item.slug || `/jobs/in/${toCitySlug(item.city)}`;
-    if (!href.startsWith("/")) {
-      href = `/${href}`;
-    }
-    if (!href.endsWith("/")) {
-      href = `${href}/`;
-    }
+    const slug = item.slug
+      ? item.slug.replace(/^\/?jobs\/in\//, "").replace(/^\/+|\/+$/g, "")
+      : item.city.toLowerCase().replace(/\s+/g, "-");
+    const href = ensureTrailingSlash(item.url || `/jobs/in/${slug}/`);
+
     return {
       name: item.city,
       href,
-      slug: item.slug || toCitySlug(item.city),
+      slug,
+      hasActiveCityPage: item.hasActiveCityPage ?? false,
+      roles: toNavRoles(item.roles),
     };
   });
-
-const DEFAULT_NAV_CITIES = formatCityList(DEFAULT_SEO_CITIES);
 
 // Module-level singleton cache to prevent duplicate network calls
 let cachedCitiesData: CityNavItem[] | null = null;
 let cachedCitiesPromise: Promise<CityNavItem[]> | null = null;
 
 export const fetchClientSeoCities = async (): Promise<CityNavItem[]> => {
-  if (cachedCitiesData && cachedCitiesData.length > 0) {
+  if (cachedCitiesData) {
     return cachedCitiesData;
   }
 
@@ -49,22 +64,24 @@ export const fetchClientSeoCities = async (): Promise<CityNavItem[]> => {
     try {
       const response = await fetch(SEO_CITIES_API_URL);
       if (!response.ok) {
-        cachedCitiesData = DEFAULT_NAV_CITIES;
-        return DEFAULT_NAV_CITIES;
+        cachedCitiesData = [];
+        return [];
       }
 
       const result: SeoCitiesApiResponse = await response.json();
-      if (result?.success && Array.isArray(result?.data) && result.data.length > 0) {
-        const formatted = formatCityList(result.data);
+      if (result?.success) {
+        const normalized = normalizeSeoCitiesResponse(result);
+        const formatted = formatCityList(normalized);
         cachedCitiesData = formatted;
         return formatted;
       }
-      cachedCitiesData = DEFAULT_NAV_CITIES;
-      return DEFAULT_NAV_CITIES;
+
+      cachedCitiesData = [];
+      return [];
     } catch (error) {
       console.error("Failed to fetch SEO cities list:", error);
-      cachedCitiesData = DEFAULT_NAV_CITIES;
-      return DEFAULT_NAV_CITIES;
+      cachedCitiesData = [];
+      return [];
     } finally {
       cachedCitiesPromise = null;
     }
@@ -81,14 +98,14 @@ export const useSeoCities = (): CityNavItem[] => {
   const [cities, setCities] = useState<CityNavItem[]>(cachedCitiesData || []);
 
   useEffect(() => {
-    if (cachedCitiesData && cachedCitiesData.length > 0) {
+    if (cachedCitiesData) {
       setCities(cachedCitiesData);
       return;
     }
 
     let isMounted = true;
     fetchClientSeoCities().then((data) => {
-      if (isMounted && data.length > 0) {
+      if (isMounted) {
         setCities(data);
       }
     });

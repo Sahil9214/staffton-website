@@ -22,6 +22,8 @@ const JobsDropdownCard = ({
   const half = Math.ceil(cities.length / 2);
   const col1 = cities.slice(0, half);
   const col2 = cities.slice(half);
+  const linkClass =
+    "group flex flex-row items-center px-3.5 py-2.5 gap-2 rounded-lg font-inter text-sm leading-[17px] font-medium text-body hover:font-semibold hover:text-heading hover:bg-badge-soft transition-colors duration-150";
 
   return (
     <div
@@ -38,27 +40,29 @@ const JobsDropdownCard = ({
         </p>
       </div>
 
-      <div className="flex flex-row items-start gap-4 w-full">
-        {[col1, col2].map((column, colIdx) => (
-          <div key={colIdx} className="flex flex-col items-stretch gap-1 flex-1 min-w-0">
-            {column.map((city) => (
-              <Link
-                key={city.name}
-                href={city.href}
-                role="menuitem"
-                onClick={onNavigate}
-                className="group flex flex-row items-center px-3.5 py-2.5 gap-2 rounded-lg font-inter text-sm leading-[17px] font-medium text-body hover:font-semibold hover:text-heading hover:bg-badge-soft transition-colors duration-150"
-              >
-                <span className="flex-1 truncate">{city.name}</span>
-                <ChevronRight
-                  className="size-3 shrink-0 text-accent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-150"
-                  strokeWidth={2.5}
-                  aria-hidden
-                />
-              </Link>
-            ))}
-          </div>
-        ))}
+      <div className="max-h-[min(320px,50vh)] w-full overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]">
+        <div className="flex flex-row items-start gap-4 w-full">
+          {[col1, col2].map((column, colIdx) => (
+            <div key={colIdx} className="flex flex-col items-stretch gap-1 flex-1 min-w-0">
+              {column.map((city) => (
+                <Link
+                  key={city.slug || city.name}
+                  href={city.href}
+                  role="menuitem"
+                  onClick={onNavigate}
+                  className={linkClass}
+                >
+                  <span className="flex-1 truncate">{city.name}</span>
+                  <ChevronRight
+                    className="size-3 shrink-0 text-accent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-150"
+                    strokeWidth={2.5}
+                    aria-hidden
+                  />
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-row items-center p-3 gap-3 w-full bg-surface-gray rounded-lg">
@@ -426,10 +430,10 @@ const Navbar = () => {
                               <p className="px-2 mb-2 font-inter font-bold text-[11px] leading-[14px] tracking-[1px] uppercase text-white/80">
                                 Browse Jobs by City
                               </p>
-                              <div className="flex flex-col">
+                              <div className="flex max-h-[min(280px,40vh)] flex-col gap-1 overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]">
                                 {cities.map((city) => (
                                   <Link
-                                    key={city.name}
+                                    key={city.slug || city.name}
                                     href={city.href}
                                     onClick={closeMenu}
                                     className="flex items-center justify-between min-h-[44px] px-3 py-2.5 rounded-lg text-white/95 text-sm font-medium hover:bg-white/10"

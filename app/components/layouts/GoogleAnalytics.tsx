@@ -4,7 +4,7 @@ import Script from "next/script";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-const GA_MEASUREMENT_ID = "G-HHD13QQTT7";
+const GA_MEASUREMENT_ID = "GT-WPFKHHX5";
 const CONSENT_KEY = "staffton-cookie-consent";
 
 declare global {

@@ -13,6 +13,10 @@
 # testing
 /coverage
 
+# local audit / OpenTestAI artifacts (do not commit)
+opentestai-*
+/reports/
+
 # next.js
 /.next/
 /out/

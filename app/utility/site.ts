@@ -26,17 +26,17 @@ export const SOCIAL_LINKS = {
 
 /**
  * Staffton app base URL.
- * Defaults to development URL ("https://d3gifdjcbs2hsb.cloudfront.net"),
- * but can be overridden with NEXT_PUBLIC_API_FRONTEND_URL for production ("https://app.stafftonhealth.com").
+ * Defaults to production ("https://app.stafftonhealth.com").
+ * Override with NEXT_PUBLIC_API_FRONTEND_URL when pointing at another environment.
  */
 export const APP_BASE_URL = (
   process.env.NEXT_PUBLIC_API_FRONTEND_URL ||
-  "https://d3gifdjcbs2hsb.cloudfront.net"
+  "https://app.stafftonhealth.com"
 ).replace(/\/$/, "");
 
 /**
  * Returns direct application/detail URL for a specific job in the app.
- * e.g. https://d3gifdjcbs2hsb.cloudfront.net/jobs/:jobId
+ * e.g. https://app.stafftonhealth.com/jobs/:jobId
  */
 export const getJobApplicationUrl = (jobId?: string) => {
   if (!jobId) {

@@ -63,7 +63,7 @@ const BlogCard = ({
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <article className="flex h-full flex-col rounded-xl border border-slate-100 bg-white  transition-shadow duration-200 hover:shadow-[0px_0px_10px_0px_#0000000D]">
-        <div className="overflow-hidden bg-surface-hover">
+        <div className="overflow-hidden bg-surface-hover h-[215px]">
           {imageSrc ? (
             <Image
               src={imageSrc}

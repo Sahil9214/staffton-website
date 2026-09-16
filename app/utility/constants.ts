@@ -13,7 +13,7 @@ export type NavLink = {
 export const navigationLinks: NavLink[] = [
   { name: "Jobs", href: "/nurse-doctor-jobs-india/", dropdown: "jobs" },
   { name: "Hire Talent", href: `${HIRE_TALENT_PATH}/` },
-  { name: "Blogs", href: "https://stafftonhealth.com/blog/", external: true },
+  { name: "Blogs", href: "https://stafftonhealth.com/blog/" },
   { name: "About Us", href: "/about-us/" },
   { name: "Contact Us", href: "/contact-us/" },
 ];
@@ -25,6 +25,7 @@ export const navigationLinks: NavLink[] = [
  * Base URL and endpoint paths are centralized here for easy configuration.
  * Change API_BASE_URL (or set NEXT_PUBLIC_API_BASE_URL in .env) for dev/prod.
  */
+// hello
 export const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   "https://dev-api.stafftonhealth.com"
@@ -32,8 +33,11 @@ export const API_BASE_URL = (
 
 export const API_ENDPOINTS = {
   PUBLIC: {
-    SEO_CITIES: "/api/v1/public/jobs/seo/cities",
+    SEO_CITIES: "/api/v1/public/seo/cities",
     SEO_CITY_JOBS: "/api/v1/public/jobs/seo/city",
+    SEO_PAGES_BY_PATH: "/api/v1/public/seo/pages/by-path",
+    /** Published CMS SEO landing URLs for XML sitemap indexing */
+    SEO_PAGES_SITEMAP: "/api/v1/public/seo/pages/sitemap",
   },
   COMMON: {
     CONTACT_US: "/api/v1/common/contact-us",
@@ -42,6 +46,9 @@ export const API_ENDPOINTS = {
 
 /** Full URL for SEO cities list (used in Navbar jobs dropdown) */
 export const SEO_CITIES_API_URL = `${API_BASE_URL}${API_ENDPOINTS.PUBLIC.SEO_CITIES}`;
+
+/** Full URL for CMS-published SEO page sitemap entries */
+export const SEO_PAGES_SITEMAP_API_URL = `${API_BASE_URL}${API_ENDPOINTS.PUBLIC.SEO_PAGES_SITEMAP}`;
 
 /**
  * WordPress REST API base (posts, media, terms).
@@ -68,6 +75,7 @@ export type WordpressFeaturedMedia = {
 export type WordpressPost = {
   id: number | string;
   date?: string;
+  modified?: string;
   link?: string;
   title?: WordpressRendered;
   excerpt?: WordpressRendered;
@@ -140,49 +148,168 @@ export async function getAllBlogs(perPage: number): Promise<WordpressPost[]> {
   }
 }
 
+const WORDPRESS_SITEMAP_PER_PAGE = 100;
+const WORDPRESS_SITEMAP_MAX_PAGES = 20;
+
+export type WordpressSitemapPost = Pick<
+  WordpressPost,
+  "link" | "date" | "modified"
+>;
+
+/**
+ * Fetch every published WordPress post for the XML sitemap.
+ * Paginates the REST API and omits embeds so a static build stays lightweight.
+ * Returns an empty list on failure so sitemap generation still succeeds.
+ */
+export async function getAllBlogSitemapPosts(): Promise<WordpressSitemapPost[]> {
+  const posts: WordpressSitemapPost[] = [];
+
+  try {
+    for (let page = 1; page <= WORDPRESS_SITEMAP_MAX_PAGES; page += 1) {
+      const res = await fetch(
+        `${WORDPRESS_API_URL}/posts?per_page=${WORDPRESS_SITEMAP_PER_PAGE}&page=${page}&status=publish&_fields=link,date,modified`,
+        {
+          headers: { accept: "application/json" },
+          next: { revalidate: 3600 },
+        }
+      );
+
+      if (!res.ok) {
+        console.error(`Failed to fetch blog sitemap posts: ${res.status}`);
+        break;
+      }
+
+      const json: unknown = await res.json();
+      if (!Array.isArray(json) || json.length === 0) break;
+
+      posts.push(...(json as WordpressSitemapPost[]));
+
+      const totalPages = Number.parseInt(
+        res.headers.get("X-WP-TotalPages") ?? "1",
+        10
+      );
+      if (!Number.isFinite(totalPages) || page >= totalPages) break;
+    }
+  } catch (error) {
+    console.error("Error fetching blog sitemap posts:", error);
+  }
+
+  return posts;
+}
+
+export interface SeoCityRole {
+  label: string;
+  slug: string;
+  url: string;
+}
+
 export interface SeoCityItem {
   city: string;
   slug: string;
+  url?: string;
+  country?: string;
+  hasActiveCityPage?: boolean;
+  roles?: SeoCityRole[];
   metaTitle?: string;
   jobCount?: number;
+}
+
+/** Raw city object from `/api/v1/public/jobs/seo/cities` */
+export interface SeoCityApiCity {
+  name: string;
+  slug: string;
+  country?: string;
+  url: string;
+  hasActiveCityPage?: boolean;
+  roles?: SeoCityRole[];
 }
 
 export interface SeoCitiesApiResponse {
   success: boolean;
   message?: string;
-  data: SeoCityItem[];
+  data:
+    | SeoCityItem[]
+    | {
+        cities: SeoCityApiCity[];
+      };
   timestamp?: string;
 }
 
-export const DEFAULT_SEO_CITIES: SeoCityItem[] = [
-  { city: "Bengaluru", slug: "/jobs/in/bengaluru/" },
-  { city: "Pune", slug: "/jobs/in/pune/" },
-  { city: "Chennai", slug: "/jobs/in/chennai/" },
-  { city: "Hyderabad", slug: "/jobs/in/hyderabad/" },
-  { city: "Kolkata", slug: "/jobs/in/kolkata/" },
-  { city: "Ahmedabad", slug: "/jobs/in/ahmedabad/" },
-  { city: "Mumbai", slug: "/jobs/in/mumbai/" },
-  { city: "Delhi", slug: "/jobs/in/delhi/" },
-  { city: "Indore", slug: "/jobs/in/indore/" },
-];
+export function ensureTrailingSlash(path: string): string {
+  if (!path) return "/";
+  let href = path.startsWith("/") ? path : `/${path}`;
+  if (!href.endsWith("/")) href = `${href}/`;
+  return href;
+}
+
+/**
+ * Normalize SEO cities API payload (new `data.cities` shape or legacy `data[]`).
+ */
+export function normalizeSeoCitiesResponse(
+  json: SeoCitiesApiResponse | null | undefined
+): SeoCityItem[] {
+  const raw = json?.data;
+  if (!raw) return [];
+
+  if (Array.isArray(raw)) {
+    return raw
+      .filter((item) => item?.city)
+      .map((item) => {
+        const slug = item.slug
+          ? item.slug.replace(/^\/?jobs\/in\//, "").replace(/^\/+|\/+$/g, "")
+          : toCitySlug(item.city);
+        const url = item.url || cityJobsHref(item.city);
+        return {
+          city: item.city,
+          slug,
+          url: ensureTrailingSlash(url),
+          country: item.country,
+          hasActiveCityPage: item.hasActiveCityPage ?? true,
+          roles: (item.roles ?? []).map((role) => ({
+            ...role,
+            url: ensureTrailingSlash(role.url),
+          })),
+          metaTitle: item.metaTitle,
+          jobCount: item.jobCount,
+        };
+      });
+  }
+
+  if (Array.isArray(raw.cities)) {
+    return raw.cities
+      .filter((item) => item?.name)
+      .map((item) => ({
+        city: item.name,
+        slug: item.slug || toCitySlug(item.name),
+        url: ensureTrailingSlash(item.url || cityJobsHref(item.name)),
+        country: item.country,
+        hasActiveCityPage: item.hasActiveCityPage ?? false,
+        roles: (item.roles ?? []).map((role) => ({
+          ...role,
+          url: ensureTrailingSlash(role.url),
+        })),
+      }));
+  }
+
+  return [];
+}
 
 /**
  * Server-side / static helper to fetch SEO cities list.
- * Falls back to DEFAULT_SEO_CITIES if the API is unreachable during build or runtime.
+ * Returns an empty list if the API is unreachable during build or runtime.
  */
 export async function getSeoCities(): Promise<SeoCityItem[]> {
   try {
     const res = await fetch(SEO_CITIES_API_URL, {
       next: { revalidate: 3600 },
     });
-    if (!res.ok) return DEFAULT_SEO_CITIES;
+    if (!res.ok) return [];
     const json: SeoCitiesApiResponse = await res.json();
-    return json?.success && Array.isArray(json?.data) && json.data.length > 0
-      ? json.data
-      : DEFAULT_SEO_CITIES;
+    if (!json?.success) return [];
+    return normalizeSeoCitiesResponse(json);
   } catch (error) {
     console.error("Error fetching SEO cities:", error);
-    return DEFAULT_SEO_CITIES;
+    return [];
   }
 }
 
@@ -598,7 +725,6 @@ export const footerCompanyLinks = [
   {
     name: "Blogs",
     href: "https://stafftonhealth.com/blog/",
-    external: true,
   },
 ] as const;
 

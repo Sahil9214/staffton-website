@@ -4,15 +4,21 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AlertCircle, ChevronDown, ChevronLeft, ChevronRight, Loader2, Search, X } from "lucide-react";
 import { useSeoCities } from "../../../../utility/useSeoCities";
-import type { ApiPagination } from "../../../../utility/jobs-api";
 import JobCard, { type JobCardData } from "./job-card";
+
+export type JobsPagination = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
 
 export interface JobListingsProps {
   city: string;
   citySlug: string;
   role?: string;
   jobs: JobCardData[];
-  pagination: ApiPagination;
+  pagination: JobsPagination;
   loading: boolean;
   isError?: boolean;
   onRetry?: () => void;
@@ -179,9 +185,18 @@ const JobListings = ({
                 const itemCleanSlug = item.slug
                   ? item.slug.replace(/^\/jobs\/in\//, "").replace(/\/$/, "")
                   : item.name.toLowerCase().replace(/\s+/g, "-");
-                const itemHref = role
-                  ? `/jobs/in/${itemCleanSlug}/${role}/`
-                  : item.href;
+
+                let itemHref = item.href;
+                if (role) {
+                  const matchingRole = item.roles.find((r) => r.slug === role);
+                  itemHref = matchingRole
+                    ? matchingRole.href
+                    : item.hasActiveCityPage
+                      ? `/jobs/in/${itemCleanSlug}/${role}/`
+                      : item.roles[0]?.href || item.href;
+                } else if (!item.hasActiveCityPage) {
+                  itemHref = item.roles[0]?.href || item.href;
+                }
 
                 return (
                   <li key={item.name} role="option" aria-selected={selected}>

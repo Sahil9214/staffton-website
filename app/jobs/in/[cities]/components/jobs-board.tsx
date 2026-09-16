@@ -1,8 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { fetchCityJobs, roleSlugToApiRole, type ApiPagination } from "../../../../utility/jobs-api";
+import {
+  fetchCityJobs,
+  roleSlugToApiRole,
+  type ApiPagination,
+} from "../../../../utility/jobs-api";
 import { toCitySlug } from "../../../../utility/constants";
 import JobFilters from "./job-filters";
 import JobListings from "./job-listings";
@@ -70,7 +74,6 @@ const JobsBoard = ({
   const citySlug = toCitySlug(city);
   const activeRole = role ? role.toLowerCase() : undefined;
 
-  // Initialize state from URL search params
   const initialPage = Math.max(1, Number(searchParams?.get("page")) || 1);
   const initialQuery = searchParams?.get("q") || "";
   const initialSalaries = searchParams?.get("salary")
@@ -79,8 +82,8 @@ const JobsBoard = ({
   const initialRoles = activeRole
     ? [activeRole]
     : searchParams?.get("role_category")
-    ? (searchParams.get("role_category") || "").split(",").filter(Boolean)
-    : ["all"];
+      ? (searchParams.get("role_category") || "").split(",").filter(Boolean)
+      : ["all"];
   const initialExp = Number(searchParams?.get("experience_max")) || 0;
 
   const [page, setPage] = useState<number>(initialPage);
@@ -102,11 +105,12 @@ const JobsBoard = ({
   const [isError, setIsError] = useState<boolean>(false);
   const isFirstMountRef = useRef<boolean>(true);
 
-  // Update canonical tag dynamically in document head on client side for self-canonical SEO
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    let canonicalLink = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null;
     const baseCanonical = activeRole
       ? `https://stafftonhealth.com/jobs/in/${citySlug}/${activeRole}/`
       : `https://stafftonhealth.com/jobs/in/${citySlug}/`;
@@ -119,7 +123,6 @@ const JobsBoard = ({
     canonicalLink.setAttribute("href", baseCanonical);
   }, [activeRole, citySlug]);
 
-  // Sync state to URL search parameters without full page reload
   const syncUrlParams = useCallback(
     (nextState: {
       page: number;
@@ -159,7 +162,6 @@ const JobsBoard = ({
     [isRolePage, pathname]
   );
 
-  // Fetch / load jobs from backend API
   const loadJobs = useCallback(async () => {
     setLoading(true);
     setIsError(false);
@@ -176,11 +178,13 @@ const JobsBoard = ({
         limit: 10,
         q: query.trim() || undefined,
         salary: mappedSalaries.length > 0 ? mappedSalaries : undefined,
-        role_category: mappedRoles && mappedRoles.length > 0 ? mappedRoles : undefined,
+        role_category:
+          mappedRoles && mappedRoles.length > 0 ? mappedRoles : undefined,
         experience_max: experience > 0 ? experience : undefined,
         sort_by: "latest",
       });
 
+      // Ignore `data.seo` from this API — only use jobs + pagination.
       if (res?.success && res.data) {
         setJobs(res.data.jobs || []);
         if (res.data.pagination) {
@@ -216,7 +220,6 @@ const JobsBoard = ({
     loadJobs();
   }, [loadJobs, initialJobs]);
 
-  // Handlers for interactive actions
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     syncUrlParams({
@@ -228,7 +231,8 @@ const JobsBoard = ({
     });
 
     if (boardRef.current) {
-      const topOffset = boardRef.current.getBoundingClientRect().top + window.scrollY - 80;
+      const topOffset =
+        boardRef.current.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
     }
   };
@@ -257,7 +261,6 @@ const JobsBoard = ({
     });
   };
 
-  // Navigates to dynamic role page when user selects a role, or navigates back to city page when "all" is selected
   const handleRolesChange = (newRoles: string[]) => {
     const selectedRole = newRoles.find((r) => r !== "all");
 
@@ -361,4 +364,3 @@ const JobsBoard = ({
 };
 
 export default JobsBoard;
-

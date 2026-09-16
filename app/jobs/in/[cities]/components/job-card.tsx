@@ -30,6 +30,37 @@ function formatRelativeTime(dateStr?: string): string {
   return `Posted ${months} ${months === 1 ? "month" : "months"} ago`;
 }
 
+function formatExperience(
+  min?: number | null,
+  max?: number | null,
+  text?: string,
+): string {
+  if (min != null || max != null) {
+    const lo = min ?? 0;
+    const hi = max;
+
+    if (lo >= 10 && (hi == null || hi >= 10)) {
+      return "10+ yrs";
+    }
+    if (hi == null) {
+      return `${lo}+ yrs`;
+    }
+    if (lo === hi) {
+      return `${lo} yrs`;
+    }
+    return `${lo} - ${hi} yrs`;
+  }
+
+  if (text) {
+    if (/^10\s*[-–]\s*10\s*(yrs?|years?)?$/i.test(text.trim())) {
+      return "10+ yrs";
+    }
+    return text;
+  }
+
+  return "0-5 yrs";
+}
+
 const JobCard = ({ job }: { job: JobCardData }) => {
   const isApiItem = "orgName" in job;
 
@@ -40,10 +71,11 @@ const JobCard = ({ job }: { job: JobCardData }) => {
     : job.location;
 
   const experience = isApiItem
-    ? job.experienceText ||
-      (job.experienceMinYrs != null || job.experienceMaxYrs != null
-        ? `${job.experienceMinYrs ?? 0} - ${job.experienceMaxYrs ?? "+"} yrs`
-        : "0-5 yrs")
+    ? formatExperience(
+        job.experienceMinYrs,
+        job.experienceMaxYrs,
+        job.experienceText,
+      )
     : job.experience;
 
   const type = isApiItem

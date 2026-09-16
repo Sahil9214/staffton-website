@@ -80,27 +80,14 @@ export interface ApiPagination {
   totalPages: number;
 }
 
-export interface ApiSeoData {
-  city: string;
-  aliases?: string[];
-  cityAliases?: string[];
-  service?: string;
-  serviceKeywords?: string[];
-  slug: string;
-  h1Title: string;
-  metaTitle: string;
-  metaDescription: string;
-  seoKeywords: string;
-  canonicalUrl: string;
-  ogTitle: string;
-  ogDescription: string;
-}
-
+/**
+ * City jobs API may also return a `seo` object — we intentionally ignore it.
+ * Page SEO comes from elsewhere (static copy or by-path), not this endpoint.
+ */
 export interface CityJobsApiResponse {
   success: boolean;
   message?: string;
   data: {
-    seo: ApiSeoData;
     jobs: ApiJobItem[];
     filters: ApiFilters;
     pagination: ApiPagination;
@@ -230,7 +217,8 @@ export function buildCityJobsApiUrl(params: FetchCityJobsParams): string {
 }
 
 /**
- * Fetches SEO jobs for a specific city from the backend API.
+ * Fetches job listings for a city (and optional role).
+ * Use only `data.jobs` / `data.filters` / `data.pagination` — page SEO comes from by-path.
  */
 export async function fetchCityJobs(
   params: FetchCityJobsParams,

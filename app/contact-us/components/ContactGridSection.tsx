@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   Phone,
   Mail,
   Clock,
   ChevronDown,
-  CheckCircle2,
   Loader2,
 } from "lucide-react";
 import { API_BASE_URL, API_ENDPOINTS } from "../../utility/constants";
@@ -81,10 +81,11 @@ const PHONE_MAX_DIGITS = 10;
 const MESSAGE_MAX_LENGTH = 1000;
 
 const ContactGridSection = () => {
+  const router = useRouter();
   const [fields, setFields] = useState<FormFields>(DEFAULT_FIELDS);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
+    "idle" | "submitting" | "error"
   >("idle");
 
   const validateField = (name: keyof FormFields, value: string): string => {
@@ -218,9 +219,9 @@ const ContactGridSection = () => {
         throw new Error(`Request failed with status ${response.status}`);
       }
 
-      setSubmitStatus("success");
       setFields(DEFAULT_FIELDS);
       setErrors({});
+      router.push("/contact/thank-you/");
     } catch {
       setSubmitStatus("error");
     }
@@ -249,232 +250,205 @@ const ContactGridSection = () => {
               </div>
             )}
 
-            {submitStatus === "success" ? (
-              <div className="animate-in fade-in flex flex-col items-center justify-center px-4 py-16 text-center duration-300">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-badge-soft text-accent">
-                  <CheckCircle2 className="h-10 w-10" />
+            <div className="flex flex-col gap-2">
+              <h2 className="font-inter text-2xl font-bold leading-[29px] text-heading">
+                Send us a Message
+              </h2>
+              <p className="font-inter text-sm font-normal leading-[17px] text-neutral">
+                Our team typically responds within 2 business hours.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {/* Name + Email */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
+                <div className={fieldGroupClass}>
+                  <label htmlFor="fullName" className={labelClass}>
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    value={fields.fullName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Jane Doe"
+                    maxLength={FULL_NAME_MAX_LENGTH}
+                    autoComplete="name"
+                    className={`${inputBase} ${errors.fullName ? inputErr : inputOk}`}
+                  />
+                  {errors.fullName && (
+                    <span className={fieldErrorClass}>{errors.fullName}</span>
+                  )}
                 </div>
-                <h3 className="mb-3 font-inter text-2xl font-bold text-heading">
-                  Message Sent Successfully!
-                </h3>
-                <p className="mb-8 max-w-md font-inter text-sm font-normal leading-relaxed text-neutral">
-                  Thank you for reaching out to Staffton. Our support team
-                  typically reviews inquiries and responds within 2 business
-                  hours.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitStatus("idle")}
-                  className="rounded-[10px] bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0px_10px_24px_-10px_rgba(13,148,136,0.2)] transition-colors hover:bg-brand-hover active:bg-brand-dark"
-                >
-                  Send Another Message
-                </button>
+
+                <div className={fieldGroupClass}>
+                  <label htmlFor="email" className={labelClass}>
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={fields.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="jane.doe@hospital.org"
+                    maxLength={EMAIL_MAX_LENGTH}
+                    autoComplete="email"
+                    className={`${inputBase} ${errors.email ? inputErr : inputOk}`}
+                  />
+                  {errors.email && (
+                    <span className={fieldErrorClass}>{errors.email}</span>
+                  )}
+                </div>
               </div>
-            ) : (
-              <>
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-inter text-2xl font-bold leading-[29px] text-heading">
-                    Send us a Message
-                  </h2>
-                  <p className="font-inter text-sm font-normal leading-[17px] text-neutral">
-                    Our team typically responds within 2 business hours.
-                  </p>
+
+              {/* Phone + Role */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
+                <div className={fieldGroupClass}>
+                  <label htmlFor="phoneNumber" className={labelClass}>
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={fields.phoneNumber}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="+91 9875197343"
+                    maxLength={PHONE_MAX_DIGITS}
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    className={`${inputBase} ${errors.phoneNumber ? inputErr : inputOk}`}
+                  />
+                  {errors.phoneNumber && (
+                    <span className={fieldErrorClass}>
+                      {errors.phoneNumber}
+                    </span>
+                  )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                  {/* Name + Email */}
-                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
-                    <div className={fieldGroupClass}>
-                      <label htmlFor="fullName" className={labelClass}>
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={fields.fullName}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder="Jane Doe"
-                        maxLength={FULL_NAME_MAX_LENGTH}
-                        autoComplete="name"
-                        className={`${inputBase} ${errors.fullName ? inputErr : inputOk}`}
-                      />
-                      {errors.fullName && (
-                        <span className={fieldErrorClass}>
-                          {errors.fullName}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className={fieldGroupClass}>
-                      <label htmlFor="email" className={labelClass}>
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={fields.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder="jane.doe@hospital.org"
-                        maxLength={EMAIL_MAX_LENGTH}
-                        autoComplete="email"
-                        className={`${inputBase} ${errors.email ? inputErr : inputOk}`}
-                      />
-                      {errors.email && (
-                        <span className={fieldErrorClass}>{errors.email}</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Phone + Role */}
-                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-4">
-                    <div className={fieldGroupClass}>
-                      <label htmlFor="phoneNumber" className={labelClass}>
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        value={fields.phoneNumber}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder="+91 9875197343"
-                        maxLength={PHONE_MAX_DIGITS}
-                        inputMode="numeric"
-                        autoComplete="tel"
-                        className={`${inputBase} ${errors.phoneNumber ? inputErr : inputOk}`}
-                      />
-                      {errors.phoneNumber && (
-                        <span className={fieldErrorClass}>
-                          {errors.phoneNumber}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className={fieldGroupClass}>
-                      <label htmlFor="role" className={labelClass}>
-                        I am a...
-                      </label>
-                      <div className="relative w-full">
-                        <select
-                          id="role"
-                          name="role"
-                          value={fields.role}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className={`${inputBase} cursor-pointer appearance-none pr-10 text-neutral ${
-                            errors.role ? inputErr : inputOk
-                          }`}
-                        >
-                          <option value="Medical Professional">
-                            Medical Professional
-                          </option>
-                          <option value="Doctor">Doctor</option>
-                          <option value="Nurse">Nurse</option>
-                          <option value="Allied Health Worker">
-                            Allied Health Worker
-                          </option>
-                          <option value="Technician">Technician</option>
-                          <option value="Non-Clinical Staff">
-                            Non-Clinical Staff
-                          </option>
-                          <option value="Hospital / Facility">
-                            Hospital / Facility
-                          </option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                          <ChevronDown className="h-4 w-4 text-neutral" />
-                        </div>
-                      </div>
-                      {errors.role && (
-                        <span className={fieldErrorClass}>{errors.role}</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Subject */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="subject" className={labelClass}>
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={fields.subject}
+                <div className={fieldGroupClass}>
+                  <label htmlFor="role" className={labelClass}>
+                    I am a...
+                  </label>
+                  <div className="relative w-full">
+                    <select
+                      id="role"
+                      name="role"
+                      value={fields.role}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="Inquiry about credentialing / facility onboarding"
-                      maxLength={SUBJECT_MAX_LENGTH}
-                      className={`${inputBase} ${errors.subject ? inputErr : inputOk}`}
-                    />
-                    {errors.subject && (
-                      <span className={fieldErrorClass}>{errors.subject}</span>
-                    )}
-                  </div>
-
-                  {/* Message */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="message" className={labelClass}>
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      value={fields.message}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      placeholder="Type your message here..."
-                      maxLength={MESSAGE_MAX_LENGTH}
-                      aria-describedby="message-count"
-                      className={`${inputBase} h-[120px] resize-none py-3 ${
-                        errors.message ? inputErr : inputOk
+                      className={`${inputBase} cursor-pointer appearance-none pr-10 text-neutral ${
+                        errors.role ? inputErr : inputOk
                       }`}
-                    />
-                    <div className="flex items-start justify-between gap-3">
-                      {errors.message && (
-                        <span className={fieldErrorClass}>{errors.message}</span>
-                      )}
-                      <span
-                        id="message-count"
-                        className={`ml-auto shrink-0 text-xs tabular-nums ${
-                          fields.message.length >= MESSAGE_MAX_LENGTH
-                            ? "font-medium text-red-500"
-                            : "text-neutral"
-                        }`}
-                      >
-                        {fields.message.length}/{MESSAGE_MAX_LENGTH}
-                      </span>
+                    >
+                      <option value="Medical Professional">
+                        Medical Professional
+                      </option>
+                      <option value="Doctor">Doctor</option>
+                      <option value="Nurse">Nurse</option>
+                      <option value="Allied Health Worker">
+                        Allied Health Worker
+                      </option>
+                      <option value="Technician">Technician</option>
+                      <option value="Non-Clinical Staff">
+                        Non-Clinical Staff
+                      </option>
+                      <option value="Hospital / Facility">
+                        Hospital / Facility
+                      </option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <ChevronDown className="h-4 w-4 text-neutral" />
                     </div>
                   </div>
+                  {errors.role && (
+                    <span className={fieldErrorClass}>{errors.role}</span>
+                  )}
+                </div>
+              </div>
 
-                  <button
-                    type="submit"
-                    disabled={submitStatus === "submitting"}
-                    className="mt-0 flex h-[43px] w-full cursor-pointer select-none items-center justify-center gap-2.5 rounded-[10px] bg-accent px-6 py-3 font-inter font-semibold text-white shadow-[0px_10px_24px_-10px_rgba(13,148,136,0.2)] transition-colors hover:bg-brand-hover active:bg-brand-dark disabled:bg-teal-400"
+              {/* Subject */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="subject" className={labelClass}>
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={fields.subject}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Inquiry about credentialing / facility onboarding"
+                  maxLength={SUBJECT_MAX_LENGTH}
+                  className={`${inputBase} ${errors.subject ? inputErr : inputOk}`}
+                />
+                {errors.subject && (
+                  <span className={fieldErrorClass}>{errors.subject}</span>
+                )}
+              </div>
+
+              {/* Message */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="message" className={labelClass}>
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={fields.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Type your message here..."
+                  maxLength={MESSAGE_MAX_LENGTH}
+                  aria-describedby="message-count"
+                  className={`${inputBase} h-[120px] resize-none py-3 ${
+                    errors.message ? inputErr : inputOk
+                  }`}
+                />
+                <div className="flex items-start justify-between gap-3">
+                  {errors.message && (
+                    <span className={fieldErrorClass}>{errors.message}</span>
+                  )}
+                  <span
+                    id="message-count"
+                    className={`ml-auto shrink-0 text-xs tabular-nums ${
+                      fields.message.length >= MESSAGE_MAX_LENGTH
+                        ? "font-medium text-red-500"
+                        : "text-neutral"
+                    }`}
                   >
-                    {submitStatus === "submitting" ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin text-white" />
-                        <span>Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-base leading-[19px]">
-                          Send Message
-                        </span>
-                        <ArrowRight className="h-4 w-4 text-white" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              </>
-            )}
+                    {fields.message.length}/{MESSAGE_MAX_LENGTH}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitStatus === "submitting"}
+                className="mt-0 flex h-[43px] w-full cursor-pointer select-none items-center justify-center gap-2.5 rounded-[10px] bg-accent px-6 py-3 font-inter font-semibold text-white shadow-[0px_10px_24px_-10px_rgba(13,148,136,0.2)] transition-colors hover:bg-brand-hover active:bg-brand-dark disabled:bg-teal-400"
+              >
+                {submitStatus === "submitting" ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-base leading-[19px]">
+                      Send Message
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-white" />
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </Reveal>
 

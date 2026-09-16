@@ -8,7 +8,7 @@ import SectionPill from "../SectionPill";
 export interface MediaTextSectionProps {
   badge?: string;
   badgeIcon?: LucideIcon;
-  heading: React.ReactNode;
+  heading?: React.ReactNode;
   subheading?: string;
   paragraphs?: string[];
   description?: string;
@@ -32,8 +32,8 @@ const MediaTextSection = ({
   paragraphs,
   description,
   children,
-  ctaLabel = "Contact Us Today",
-  ctaHref = "/contact-us/",
+  ctaLabel,
+  ctaHref,
   image,
   reversed = false,
   background = "bg-surface-page",
@@ -59,9 +59,11 @@ const MediaTextSection = ({
               </SectionPill>
             )}
 
-            <h2 className="text-[28px] font-extrabold leading-tight tracking-[-1px] text-heading text-balance sm:text-[34px] sm:leading-[42px] lg:text-[40px] lg:leading-[48px]">
-              {heading}
-            </h2>
+            {heading ? (
+              <h2 className="text-[28px] font-extrabold leading-tight tracking-[-1px] text-heading text-balance sm:text-[34px] sm:leading-[42px] lg:text-[40px] lg:leading-[48px]">
+                {heading}
+              </h2>
+            ) : null}
 
             {subheading && (
               <h3 className="text-base font-bold leading-6 text-heading sm:text-[20px] sm:leading-[25px]">

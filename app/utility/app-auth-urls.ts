@@ -7,8 +7,8 @@ import { APP_BASE_URL, HIRE_TALENT_PATH } from "./site";
 
 /** Home page — edit these two when the app URLs change. */
 export const HOME_AUTH_URLS = {
-  login: "https://app.stafftonhealth.com/auth/register",
-  signup: "https://app.stafftonhealth.com/",
+  login: `${APP_BASE_URL}/auth/login`,
+  signup: APP_BASE_URL,
 } as const;
 
 export const APP_AUTH_URLS = {
