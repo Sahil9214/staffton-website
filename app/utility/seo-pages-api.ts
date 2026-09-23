@@ -406,7 +406,7 @@ export function seoLandingPageMetadata(
   data: SeoLandingPageData
 ): Metadata {
   const normalized = normalizeSeoLandingPageData(data) || data;
-  const meta = normalized.meta || {};
+  const meta: Partial<SeoPageMeta> = normalized.meta || {};
   const title = meta.metaTitle?.trim() || normalized.hero?.h1 || SITE_NAME;
   const description =
     meta.metaDescription?.trim() ||
