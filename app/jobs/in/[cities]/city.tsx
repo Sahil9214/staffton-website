@@ -1,4 +1,6 @@
-import React, { Suspense } from "react";
+"use client";
+
+import React, { Suspense, useState, useEffect } from "react";
 
 import Header from "./components/header";
 import JobsBoard from "./components/jobs-board";
@@ -117,7 +119,54 @@ function getFallbackFaqs(
 }
 
 const City = ({ city, role, seoPage }: CityProps) => {
-  const normalized = normalizeSeoLandingPageData(seoPage) || seoPage;
+  const [clientSeoPage, setClientSeoPage] = useState<SeoLandingPageData | null>(
+    seoPage || null
+  );
+
+  // Client-Side Rendering (CSR): Live fetch from dev-api
+  useEffect(() => {
+    let isMounted = true;
+    const targetCity = (city || "mumbai").toLowerCase().trim();
+    const query = new URLSearchParams({
+      country: "in",
+      city: targetCity,
+    });
+    if (role && role.trim()) {
+      query.set("role", role.toLowerCase().trim());
+    }
+
+    const apiUrl = `https://dev-api.stafftonhealth.com/api/v1/public/seo/pages/by-path?${query.toString()}`;
+    console.log(`🌐 [CLIENT CSR] Fetching live SEO page data: ${apiUrl}`);
+
+    fetch(apiUrl, {
+      headers: { accept: "application/json" },
+      cache: "no-store",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
+      .then((payload) => {
+        if (isMounted && payload?.success && payload?.data) {
+          console.log(`✅ [CLIENT CSR] Successfully loaded data for ${targetCity}:`, payload.data);
+          const normalizedData =
+            normalizeSeoLandingPageData(payload.data) || payload.data;
+          setClientSeoPage(normalizedData);
+        }
+      })
+      .catch((err) => {
+        console.error("❌ [CLIENT CSR] Failed to fetch SEO page data:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [city, role]);
+
+  const activePage = clientSeoPage || seoPage;
+  const normalized = normalizeSeoLandingPageData(activePage) || activePage;
   const label = roleLabel(role);
   const hero = normalized?.hero;
   const displayCity = normalized?.city || city;
@@ -160,7 +209,7 @@ const City = ({ city, role, seoPage }: CityProps) => {
       ? normalized.faq
       : fallbackFaq;
 
-  const jsonLd = seoLandingPageJsonLd(normalized || seoPage, {
+  const jsonLd = seoLandingPageJsonLd(normalized || activePage, {
     city: displayCity,
     citySlug: toCitySlug(displayCity),
     role,
@@ -171,11 +220,11 @@ const City = ({ city, role, seoPage }: CityProps) => {
     faqItems: activeFaq.items,
   });
 
-  // [SERVER LOG] Print data in terminal
-  console.log("==================== [SERVER SSR: CITY PAGE DATA] ====================");
+  // Client log to verify data and hyperlink in browser console
+  console.log("==================== [CLIENT CSR: CITY PAGE DATA] ====================");
   console.log(`🏙️ City: "${displayCity}" | Role: "${role || "all"}" | Label: "${label || "None"}"`);
-  console.log("📥 Raw seoPage received:", JSON.stringify(seoPage, null, 2));
-  console.log("🔄 Normalized seoPage data:", JSON.stringify(normalized, null, 2));
+  console.log("📥 Active SEO Page Data:", normalized);
+  console.log("🔗 Ecosystem Description (with hyperlinks):", activeEcosystem?.description);
   console.log("✨ Active Advantage Heading:", activeAdvantage?.heading);
   console.log("🌿 Active Ecosystem Heading:", activeEcosystem?.heading);
   console.log("❓ Active FAQ Items Count:", activeFaq?.items?.length || 0);
@@ -184,7 +233,6 @@ const City = ({ city, role, seoPage }: CityProps) => {
 
   return (
     <div className="flex w-full flex-col">
-
       {jsonLd.map((schema, index) => (
         <script
           key={`seo-jsonld-${index}`}
@@ -231,5 +279,3 @@ const City = ({ city, role, seoPage }: CityProps) => {
 };
 
 export default City;
-
-// hello

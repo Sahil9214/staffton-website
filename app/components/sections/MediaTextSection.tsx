@@ -87,13 +87,18 @@ const MediaTextSection = ({
             {paragraphs && paragraphs.length > 0 ? (
               <div className="flex flex-col gap-4 font-sans text-sm font-normal leading-[24px] text-neutral sm:text-base sm:leading-[26px]">
                 {paragraphs.map((para, idx) => (
-                  <p key={idx}>{para}</p>
+                  <p
+                    key={idx}
+                    className="[&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
+                    dangerouslySetInnerHTML={{ __html: para }}
+                  />
                 ))}
               </div>
             ) : description ? (
-              <p className="font-sans text-sm font-normal leading-[24px] text-neutral sm:text-base sm:leading-[26px]">
-                {description}
-              </p>
+              <div
+                className="font-sans text-sm font-normal leading-[24px] text-neutral sm:text-base sm:leading-[26px] [&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             ) : null}
 
             {children}
@@ -143,3 +148,5 @@ const MediaTextSection = ({
 };
 
 export default MediaTextSection;
+
+// hello

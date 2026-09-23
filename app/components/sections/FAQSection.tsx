@@ -91,9 +91,10 @@ const FAQSection = ({
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="w-full max-w-[1180px] pb-6 pr-4 font-inter text-sm font-normal leading-7 text-body sm:pb-8 sm:pr-10 sm:text-base sm:leading-7">
-                        {item.answer}
-                      </p>
+                      <div
+                        className="w-full max-w-[1180px] pb-6 pr-4 font-inter text-sm font-normal leading-7 text-body sm:pb-8 sm:pr-10 sm:text-base sm:leading-7 [&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
+                        dangerouslySetInnerHTML={{ __html: item.answer }}
+                      />
                     </div>
                   </div>
                 </StaggerItem>

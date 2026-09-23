@@ -80,9 +80,10 @@ const WhyChooseStaffton = ({ advantage }: WhyChooseStafftonProps) => {
             ) : null}
 
             {description ? (
-              <p className="mt-4 max-w-[760px] font-sans text-sm font-normal leading-relaxed text-[#737373] sm:text-base sm:leading-[26px]">
-                {description}
-              </p>
+              <div
+                className="mt-4 max-w-[760px] font-sans text-sm font-normal leading-relaxed text-[#737373] sm:text-base sm:leading-[26px] [&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold transition-colors"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             ) : null}
           </div>
         )}
@@ -107,9 +108,10 @@ const WhyChooseStaffton = ({ advantage }: WhyChooseStafftonProps) => {
                       </h3>
                     ) : null}
                     {card.description ? (
-                      <p className="font-sans text-sm font-normal leading-[22px] text-[#737373]">
-                        {card.description}
-                      </p>
+                      <div
+                        className="font-sans text-sm font-normal leading-[22px] text-[#737373] [&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold transition-colors"
+                        dangerouslySetInnerHTML={{ __html: card.description }}
+                      />
                     ) : null}
                   </div>
                 </div>

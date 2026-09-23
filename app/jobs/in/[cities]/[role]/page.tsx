@@ -88,16 +88,15 @@ export default async function IndianCityRoleJobs({
     notFound();
   }
 
-  const seoPage = await fetchSeoPageByPath({
-    country: "in",
-    city: cities,
-    role: cleanRole,
-  });
-
-  // If no page data from API (page not published in CMS or API failed), render 404 page
-  if (!seoPage) {
-    console.warn(`⚠️ [IndianCityRoleJobs] No data from SEO API for ${cities}/${cleanRole} -> Showing 404 page`);
-    notFound();
+  let seoPage = null;
+  try {
+    seoPage = await fetchSeoPageByPath({
+      country: "in",
+      city: cities,
+      role: cleanRole,
+    });
+  } catch (err) {
+    console.warn(`⚠️ [IndianCityRoleJobs SSR] Could not load SEO page for ${cities}/${cleanRole}:`, err);
   }
 
   return <City city={matched.city} role={cleanRole} seoPage={seoPage} />;
