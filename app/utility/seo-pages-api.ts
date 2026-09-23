@@ -339,8 +339,8 @@ export async function fetchSeoPageByPath(
       headers: {
         accept: "application/json",
       },
-      // In development mode, do not cache for 1 hour so live CMS changes reflect immediately
-      next: isDev ? { revalidate: 0 } : { revalidate: 3600 },
+      cache: "no-store",
+      next: { revalidate: 0 },
       ...init,
     });
 

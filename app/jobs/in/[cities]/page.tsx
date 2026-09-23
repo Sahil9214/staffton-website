@@ -5,10 +5,12 @@ import City from "./city";
 import { matchCitySlug } from "./match-city";
 import { getSeoCities } from "../../../utility/constants";
 import {
-  fallbackCityJobsMetadata,
   fetchSeoPageByPath,
   seoLandingPageMetadata,
 } from "../../../utility/seo-pages-api";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type PageParams = Promise<{ cities: string }>;
 

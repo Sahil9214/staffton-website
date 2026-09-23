@@ -13,6 +13,9 @@ import {
   seoLandingPageMetadata,
 } from "../../../../utility/seo-pages-api";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type PageParams = Promise<{ cities: string; role: string }>;
 
 function isValidRole(role: string): role is RoleSlug {
