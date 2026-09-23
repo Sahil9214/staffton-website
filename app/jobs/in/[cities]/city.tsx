@@ -171,39 +171,19 @@ const City = ({ city, role, seoPage }: CityProps) => {
     faqItems: activeFaq.items,
   });
 
-  // [SERVER LOG] Print full data in terminal where next dev runs
-  console.log("==================== [CITY PAGE DATA DEBUG] ====================");
+  // [SERVER LOG] Print data in terminal
+  console.log("==================== [SERVER SSR: CITY PAGE DATA] ====================");
   console.log(`🏙️ City: "${displayCity}" | Role: "${role || "all"}" | Label: "${label || "None"}"`);
-  console.log("📥 Raw seoPage prop received:", JSON.stringify(seoPage, null, 2));
+  console.log("📥 Raw seoPage received:", JSON.stringify(seoPage, null, 2));
   console.log("🔄 Normalized seoPage data:", JSON.stringify(normalized, null, 2));
-  console.log("✨ Active Advantage:", JSON.stringify(activeAdvantage, null, 2));
-  console.log("🌿 Active Ecosystem:", JSON.stringify(activeEcosystem, null, 2));
-  console.log("❓ Active FAQ:", JSON.stringify(activeFaq, null, 2));
-  console.log("📐 Generated JSON-LD Schemas count:", jsonLd.length);
-  console.log("================================================================");
+  console.log("✨ Active Advantage Heading:", activeAdvantage?.heading);
+  console.log("🌿 Active Ecosystem Heading:", activeEcosystem?.heading);
+  console.log("❓ Active FAQ Items Count:", activeFaq?.items?.length || 0);
+  console.log("📐 Generated JSON-LD Schemas:", jsonLd.length);
+  console.log("======================================================================");
 
   return (
     <div className="flex w-full flex-col">
-      {/* [BROWSER LOG] Prints full data in Chrome DevTools Console (F12) */}
-      <script
-        key="city-browser-console-logger"
-        dangerouslySetInnerHTML={{
-          __html: `console.log("%c[Staffton City Page Data]:", "background:#0d9488;color:#fff;font-weight:bold;padding:2px 8px;border-radius:4px;", ${JSON.stringify(
-            {
-              city: displayCity,
-              role: role || null,
-              roleLabel: label || null,
-              hasSeoPage: Boolean(seoPage),
-              seoPage,
-              normalized,
-              activeAdvantage,
-              activeEcosystem,
-              activeFaq,
-              jsonLd,
-            }
-          ).replace(/</g, "\\u003c")});`,
-        }}
-      />
 
       {jsonLd.map((schema, index) => (
         <script

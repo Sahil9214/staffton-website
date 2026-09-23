@@ -41,7 +41,8 @@ const Header = ({
   return (
     <section className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-accent to-dark px-5 py-10 sm:px-10 sm:py-12 md:px-[120px] md:py-14">
       <div className="flex w-full max-w-[1200px] flex-col items-start gap-6">
-        {/* Visual Breadcrumb Navigation */}
+        {/* Visual Breadcrumb Navigation (Hidden/Commented per design request - Schema BreadcrumbList remains active in JSON-LD) */}
+        {/*
         <nav aria-label="Breadcrumb" className="w-full">
           <ol className="flex flex-wrap items-center gap-1.5 font-sans text-xs text-white/75">
             <li>
@@ -87,6 +88,7 @@ const Header = ({
             )}
           </ol>
         </nav>
+        */}
 
         {pillLabel ? (
           <SectionPill icon={ShieldCheck}>{pillLabel}</SectionPill>

@@ -30,14 +30,14 @@ export async function generateMetadata({
     city: cities,
   });
 
-  if (seoPage) {
-    return seoLandingPageMetadata(seoPage);
+  if (!seoPage) {
+    return {
+      title: "Page Not Found",
+      robots: { index: false, follow: false },
+    };
   }
 
-  return fallbackCityJobsMetadata({
-    cityName: matched.city,
-    citySlug: cities,
-  });
+  return seoLandingPageMetadata(seoPage);
 }
 
 export default async function IndianCities({
@@ -57,6 +57,12 @@ export default async function IndianCities({
     country: "in",
     city: cities,
   });
+
+  // If no page data from API, show 404
+  if (!seoPage) {
+    console.warn(`⚠️ [IndianCities] No data from SEO API for city: "${cities}" -> Showing 404 page`);
+    notFound();
+  }
 
   return <City city={matched.city} seoPage={seoPage} />;
 }
