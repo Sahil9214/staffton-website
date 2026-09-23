@@ -234,7 +234,7 @@ export function normalizeSeoLandingPageData(
 ): SeoLandingPageData | null {
   if (!raw || typeof raw !== "object") return null;
 
-  const rawAny = raw as Record<string, unknown>;
+  const rawAny = raw as unknown as Record<string, unknown>;
 
   const hero: SeoPageHero = {
     pill: (raw.hero?.pill || raw.heroPill || "").trim() || undefined,
