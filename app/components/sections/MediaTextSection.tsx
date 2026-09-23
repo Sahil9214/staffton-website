@@ -89,14 +89,14 @@ const MediaTextSection = ({
                 {paragraphs.map((para, idx) => (
                   <p
                     key={idx}
-                    className="[&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
+                    className="[&_a]:text-[#0D9488] [&_a]:no-underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
                     dangerouslySetInnerHTML={{ __html: para }}
                   />
                 ))}
               </div>
             ) : description ? (
               <div
-                className="font-sans text-sm font-normal leading-[24px] text-neutral sm:text-base sm:leading-[26px] [&_a]:text-[#0D9488] [&_a]:underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
+                className="font-sans text-sm font-normal leading-[24px] text-neutral sm:text-base sm:leading-[26px] [&_a]:text-[#0D9488] [&_a]:no-underline hover:[&_a]:text-[#0F766E] [&_a]:font-semibold [&_a]:cursor-pointer transition-colors"
                 dangerouslySetInnerHTML={{ __html: description }}
               />
             ) : null}

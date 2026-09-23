@@ -102,7 +102,7 @@ const Header = ({
 
         {rawDescription ? (
           <div
-            className="w-full font-sans text-base font-normal leading-7 text-white/80 [&_a]:text-teal-200 [&_a]:underline hover:[&_a]:text-white [&_a]:font-semibold [&_a]:cursor-pointer transition-colors [&_p]:mb-2 last:[&_p]:mb-0"
+            className="w-full font-sans text-base font-normal leading-7 text-white/80 [&_a]:text-teal-200 [&_a]:no-underline hover:[&_a]:text-white [&_a]:font-semibold [&_a]:cursor-pointer transition-colors [&_p]:mb-2 last:[&_p]:mb-0"
             dangerouslySetInnerHTML={{ __html: rawDescription }}
           />
         ) : null}

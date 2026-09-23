@@ -9,7 +9,6 @@ import {
   type RoleSlug,
 } from "../../../../utility/constants";
 import {
-  fallbackCityJobsMetadata,
   fetchSeoPageByPath,
   seoLandingPageMetadata,
 } from "../../../../utility/seo-pages-api";
@@ -21,14 +20,6 @@ function isValidRole(role: string): role is RoleSlug {
   return ALL_ROLE_SLUGS.includes(lower as RoleSlug);
 }
 
-function roleLabel(role: string) {
-  return role
-    .toLowerCase()
-    .trim()
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
 
 export async function generateMetadata({
   params,
@@ -88,15 +79,16 @@ export default async function IndianCityRoleJobs({
     notFound();
   }
 
-  let seoPage = null;
-  try {
-    seoPage = await fetchSeoPageByPath({
-      country: "in",
-      city: cities,
-      role: cleanRole,
-    });
-  } catch (err) {
-    console.warn(`⚠️ [IndianCityRoleJobs SSR] Could not load SEO page for ${cities}/${cleanRole}:`, err);
+  const seoPage = await fetchSeoPageByPath({
+    country: "in",
+    city: cities,
+    role: cleanRole,
+  });
+
+  // If no page data from API (page not published in CMS or API failed), render 404 page
+  if (!seoPage) {
+    console.warn(`⚠️ [IndianCityRoleJobs] No data from SEO API for ${cities}/${cleanRole} -> Showing 404 page`);
+    notFound();
   }
 
   return <City city={matched.city} role={cleanRole} seoPage={seoPage} />;

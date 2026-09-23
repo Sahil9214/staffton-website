@@ -53,14 +53,15 @@ export default async function IndianCities({
     notFound();
   }
 
-  let seoPage = null;
-  try {
-    seoPage = await fetchSeoPageByPath({
-      country: "in",
-      city: cities,
-    });
-  } catch (err) {
-    console.warn(`⚠️ [IndianCities SSR] Could not load SEO page for ${cities}:`, err);
+  const seoPage = await fetchSeoPageByPath({
+    country: "in",
+    city: cities,
+  });
+
+  // If no page data from API, show 404
+  if (!seoPage) {
+    console.warn(`⚠️ [IndianCities] No data from SEO API for city: "${cities}" -> Showing 404 page`);
+    notFound();
   }
 
   return <City city={matched.city} seoPage={seoPage} />;
