@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LucideIcon, ArrowRight } from "lucide-react";
@@ -18,6 +20,7 @@ export interface MediaTextSectionProps {
   image: {
     src: string;
     alt: string;
+    fallbackSrc?: string;
   };
   reversed?: boolean;
   background?: string;
@@ -39,6 +42,16 @@ const MediaTextSection = ({
   background = "bg-surface-page",
   className = "",
 }: MediaTextSectionProps) => {
+  const fallback = image.fallbackSrc || "/images/city_clinical_ecosystem.jpg";
+  const initialSrc = image.src?.trim() ? image.src.trim() : fallback;
+  const [imgSrc, setImgSrc] = useState(initialSrc);
+
+  useEffect(() => {
+    setImgSrc(image.src?.trim() ? image.src.trim() : fallback);
+  }, [image.src, fallback]);
+
+  const isExternal = imgSrc.startsWith("http://") || imgSrc.startsWith("https://");
+
   return (
     <section className={`w-full overflow-hidden ${background} ${className}`.trim()}>
       <div className="section-container">
@@ -109,11 +122,17 @@ const MediaTextSection = ({
           >
             <div className="relative h-[340px] w-full max-w-[580px] overflow-hidden rounded-2xl sm:h-[420px] sm:rounded-3xl lg:h-[480px] shadow-sm">
               <Image
-                src={image.src}
-                alt={image.alt}
+                src={imgSrc}
+                alt={image.alt || "Clinical Ecosystem"}
                 fill
+                unoptimized={isExternal}
                 className="object-cover rounded-2xl sm:rounded-3xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 580px"
+                onError={() => {
+                  if (imgSrc !== fallback) {
+                    setImgSrc(fallback);
+                  }
+                }}
               />
             </div>
           </Reveal>

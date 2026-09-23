@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Info } from "lucide-react";
 import MediaTextSection from "../../../../components/sections/MediaTextSection";
@@ -31,20 +33,42 @@ const CityEcosystemSection = ({
     return null;
   }
 
-  // Only local dummy kept: image slot when API image is missing.
-  const imageSrc =  FALLBACK_ECOSYSTEM_IMAGE || ecosystem.image;
+  // Resolve backend image (string or object with url/src). Fallback to previous dummy image if absent/empty.
+  let imageSrc = FALLBACK_ECOSYSTEM_IMAGE;
+  const rawImage = ecosystem.image;
+  if (typeof rawImage === "string" && rawImage.trim()) {
+    imageSrc = rawImage.trim();
+  } else if (
+    rawImage &&
+    typeof rawImage === "object" &&
+    ("url" in rawImage || "src" in rawImage)
+  ) {
+    const obj = rawImage as { url?: string; src?: string };
+    const resolvedUrl = (obj.url || obj.src || "").trim();
+    if (resolvedUrl) {
+      imageSrc = resolvedUrl;
+    }
+  }
+
+  const paragraphs = description
+    ? description
+        .split("\n")
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : undefined;
 
   return (
     <MediaTextSection
       badge={pill}
       badgeIcon={Info}
       heading={heading || undefined}
-      paragraphs={description ? [description] : undefined}
+      paragraphs={paragraphs}
       ctaLabel={ctaLabel}
       ctaHref={ctaHref}
       image={{
         src: imageSrc,
-        alt: heading || city,
+        alt: heading || `About healthcare jobs in ${city}`,
+        fallbackSrc: FALLBACK_ECOSYSTEM_IMAGE,
       }}
       background="bg-surface-page"
     />

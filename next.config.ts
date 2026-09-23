@@ -20,8 +20,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/ncxpvfuo/**",
+        hostname: "staffton-docs.s3.ap-south-1.amazonaws.com",
+        pathname: "/**",
       },
     ],
   },
