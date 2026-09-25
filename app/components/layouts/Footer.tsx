@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useMemo } from "react";
 import Link from "next/link";
 import {
   cityJobsHref,
@@ -8,10 +10,26 @@ import {
   footerTagline,
 } from "../../utility/constants";
 import { SOCIAL_LINKS } from "../../utility/site";
+import { useSeoCities } from "../../utility/useSeoCities";
 
 const Footer = () => {
   // Reverse to match the Figma order: "Hire Talent" first, then "Hospitals"
   const platformLinks = [...footerPlatformLinks].reverse();
+  const cities = useSeoCities();
+
+  const cityColumns = useMemo(() => {
+    if (cities.length > 0) {
+      const half = Math.ceil(cities.length / 2);
+      return [cities.slice(0, half), cities.slice(half)];
+    }
+    return footerJobCityColumns.map((column) =>
+      column.map((city) => ({
+        name: city,
+        href: cityJobsHref(city),
+        slug: city.toLowerCase(),
+      }))
+    );
+  }, [cities]);
 
   return (
     <footer className="w-full bg-white border-t border-border font-sans">
@@ -159,15 +177,15 @@ const Footer = () => {
               </h3>
               <div className="max-h-[180px] w-full overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]">
                 <div className="flex flex-row items-start gap-6 w-full">
-                  {footerJobCityColumns.map((column, colIdx) => (
+                  {cityColumns.map((column, colIdx) => (
                     <div key={colIdx} className="flex flex-col items-start gap-2 flex-1">
                       {column.map((city) => (
                         <Link
-                          key={city}
-                          href={cityJobsHref(city)}
+                          key={city.slug || city.name}
+                          href={city.href}
                           className="w-full font-inter font-normal text-sm leading-[20px] text-muted hover:text-heading transition-colors duration-150"
                         >
-                          {city}
+                          {city.name}
                         </Link>
                       ))}
                     </div>

@@ -67,7 +67,6 @@ export default async function IndianCityRoleJobs({
   const { cities, role } = await params;
   const cleanRole = (role || "").toLowerCase().trim();
 
-  console.log(`🚀 [IndianCityRoleJobs SSR] Visiting city="${cities}", role="${cleanRole}"`);
 
   if (!isValidRole(cleanRole)) {
     console.warn(`⚠️ [IndianCityRoleJobs] Invalid role slug: "${cleanRole}". Allowed:`, ALL_ROLE_SLUGS);

@@ -328,11 +328,7 @@ export async function fetchSeoPageByPath(
   init?: RequestInit
 ): Promise<SeoLandingPageData | null> {
   const url = buildSeoPageByPathUrl(params);
-  const isDev = process.env.NODE_ENV !== "production";
 
-  console.log(`🌐 [SEO API REQUEST] Fetching SEO page data from backend:`);
-  console.log(`   ➡️ URL: ${url}`);
-  console.log(`   ➡️ Params: city="${params.city}", role="${params.role || "none"}", country="${params.country || "in"}"`);
 
   try {
     const res = await fetch(url, {
@@ -344,7 +340,6 @@ export async function fetchSeoPageByPath(
       ...init,
     });
 
-    console.log(`📡 [SEO API RESPONSE] Status: ${res.status} ${res.statusText} for URL: ${url}`);
 
     if (!res.ok) {
       console.warn(
@@ -354,18 +349,7 @@ export async function fetchSeoPageByPath(
     }
 
     const payload: SeoLandingPageResponse = await res.json();
-    console.log(`📦 [SEO API PAYLOAD] Backend response:`, {
-      success: payload?.success,
-      message: payload?.message,
-      hasData: Boolean(payload?.data),
-      id: payload?.data?.id,
-      city: payload?.data?.city,
-      role: payload?.data?.role,
-      metaTitle: payload?.data?.metaTitle || payload?.data?.meta?.metaTitle,
-      hasAdvantage: Boolean(payload?.data?.advantage || payload?.data?.advantageHeading),
-      hasEcosystem: Boolean(payload?.data?.ecosystem || payload?.data?.ecosystemHeading),
-      hasFaqs: Boolean(payload?.data?.faq?.items?.length || payload?.data?.faqs?.length),
-    });
+
 
     return payload?.success && payload.data ? normalizeSeoLandingPageData(payload.data) : null;
   } catch (error) {

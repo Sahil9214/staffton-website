@@ -171,9 +171,7 @@ const JobsBoard = ({
     const mappedSalaries = mapSalaryParam(salaries);
 
     try {
-      console.log(
-        `💼 [JobsBoard Client API] Fetching jobs: city="${citySlug}", role="${apiRole || "all"}", page=${page}`
-      );
+  
       const res = await fetchCityJobs({
         citySlug,
         role: apiRole,
@@ -187,11 +185,7 @@ const JobsBoard = ({
         sort_by: "latest",
       });
 
-      console.log(`💼 [JobsBoard Client API] Jobs received:`, {
-        success: res?.success,
-        jobsCount: res?.data?.jobs?.length ?? 0,
-        pagination: res?.data?.pagination,
-      });
+  
 
       // Ignore `data.seo` from this API — only use jobs + pagination.
       if (res?.success && res.data) {

@@ -171,17 +171,7 @@ const City = ({ city, role, seoPage }: CityProps) => {
     faqItems: activeFaq.items,
   });
 
-  // [SERVER LOG] SSR City Page Data
-  console.log("==================== [SERVER SSR: CITY PAGE DATA] ====================");
-  console.log(`🏙️ City: "${displayCity}" | Role: "${role || "all"}" | Label: "${label || "None"}"`);
-  console.log("📥 Raw seoPage received:", JSON.stringify(seoPage, null, 2));
-  console.log("🔄 Normalized seoPage data:", JSON.stringify(normalized, null, 2));
-  console.log("🔗 Ecosystem Description:", activeEcosystem?.description);
-  console.log("✨ Active Advantage Heading:", activeAdvantage?.heading);
-  console.log("🌿 Active Ecosystem Heading:", activeEcosystem?.heading);
-  console.log("❓ Active FAQ Items Count:", activeFaq?.items?.length || 0);
-  console.log("📐 Generated JSON-LD Schemas:", jsonLd.length);
-  console.log("======================================================================");
+
 
   return (
     <div className="flex w-full flex-col">
